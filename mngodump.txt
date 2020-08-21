@@ -1,0 +1,20 @@
+mongodump --db ekaushalnsdc -c trainingcentre -q '{userName:"TC000053"}' -o /home/tharun/Desktop/TC00053_original
+mongorestore --db ekaushalnsdc tcappealandreinspection.bson
+
+mongodump -d ekaushalnsdc -c smarttc_26jun2020 -q '{processType: "Accreditation & Affiliation"}' -o temp27 --gzip
+
+to excel
+mongoexport -d ekaushalnsdc -c cmassigninspectiondata --type=csv --fields stateName,userName,schemeName,qpCode,rating -o cmInspectionlogic.csv
+mongoexport -d ekaushalnsdc -c smartTempTC --type=csv --fields userName,rating -o smartTempTC.csv
+
+from excel
+mongoimport --db=ekaushalnsdc --collection=tempcidata --type=csv --headerline --file=tempcidata.csv
+
+//From 254 to local
+scp ec2-user@13.233.175.254:/home/ec2-user/cmInspectionlogic.csv .
+//From local to 254
+scp file.txt ec2-user@13.233.175.254:/home/ec2-user/
+
+
+
+

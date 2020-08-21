@@ -1,0 +1,124 @@
+http://localhost:3030/api/smart/v1/trainingcentre/cm/startjob
+http://13.233.175.254/api/smart/v1/trainingcentre/cm/startjob
+https://uatservices.ekaushal.com/api/smart/v1/trainingcentre/cm/startjob
+
+http://localhost:3030/api/smart/v1/trainingcentre/cm/startcaluclatemarksjob
+http://13.233.175.254/api/smart/v1/trainingcentre/cm/startcaluclatemarksjob
+https://uatservices.ekaushal.com/api/smart/v1/trainingcentre/cm/startcaluclatemarksjob
+
+1. api/smart/v1/trainingcentre/cm/list/user?query=typeOfRequest:assesmentRequest&pageNo=1&limit=10 -GET
+
+2. api/smart/v1/trainingCenter/cm/getCmStatusLogByYearQuarter -GET
+--query params
+tcUserName - string
+year - int
+quarter - int
+
+3. api/smart/v1/trainingcentre/cm/quarterly/data/{tcId}/{year}/{quarter} -GET
+
+4. api/smart/v1/trainingcentre/cm/quarter/getyears -GET (for getting years)
+
+5. api/smart/v1/trainingcentre/cm/getCmStatusLog -GET (for getting quaretes)
+--query params
+tcName - string
+
+6. api/smart/v1/trainingcentre/cm/quarterly/action - post
+	post entire TCContinuousMonitoring
+
+7. api/smart/v1/trainingcentre/cm/quarterly/final/submit/{userName}/{year}/{quarter} - post
+
+8. api/smart/v1/trainingcentre/cm/ia/assign - post
+tcwID 
+status
+assignedNextUser
+assignedNextUserRole
+
+9. api/smart/v1/trainingcentre/cm/restrict/submission/again/{userName}/{year}/{quarter}  --GET
+if returns true then restrict
+
+10. api/smart/v1/trainingcentre/cm/quarterly/action/{tcId}/{year}/{quarter}/{param} --Patch
+param can be jobRoleSpecificStandard, commonStandard, gradingParameter
+required payload
+
+11. api/smart/v1/trainingcentre/cm/updateTcDeviceId --Patch
+userName
+deviceId
+
+12. /api/smart/v1/trainingcentre/cm/list/reportlinks?typeOfRequest=assesmentRequest&tcId=TC1800 --GET
+output := 
+year
+quarterNumber
+continousMonitoringDAURL
+
+/api/smart/v1/trainingcentre/cm/list/reportlinks?typeOfRequest=inspectionRequest&tcId=TC1800 --GET
+output := 
+year
+quarterNumber
+continousMonitoringInspectionURL
+
+
+at ci & qc level cminspecton collection
+
+13. api/smart/v1/trainingcentre/cm/ia/assign
+tcwID 
+assignedNextUser - qc name
+assignedNextUserRole - Quality Control
+centreInspectorUserName -ci name 
+inspectionDate -date
+
+14. api/smart/v1/trainingcentre/cm/list/user?query=typeOfRequest:inspectionRequest&pageNo=1&limit=10 -GET
+
+15. api/smart/v1/trainingcentre/cm/get/cminspection/{userName}/{year}/{quarter} --GET
+
+16. api/smart/v1/trainingcentre/cm/update/cminspection/{userName}/{year}/{quarter} --PATCH
+
+17.  api/smart/v1/trainingcentre/cm/update/cminspection/questions/{userName}/{year}/{quarter} --PATCH
+{
+  "question": "1. Is the Centre found on same address as provided in the CAAF form?",
+  "ciAnswer": "yes",
+  "ciComment": "looks good every thing",
+  "questionPhoto": [
+    {
+      "ciimgurl": "http:??",
+      "longitude": "10.99",
+      "latitude": "77",
+      "picTime": "2020-05-06T11:01:21.387Z"
+    }
+  ],
+  "arrayIndex":2
+}
+
+18. api/smart/v1/trainingcentre/cm/ci/acceptreject -- post
+tcId
+year
+quarterNumber
+status - CIAccepted or CIRejected
+
+19. /api/smart/v1/trainingcentre/cm/ia/change/ci --POST
+
+tcId
+year
+quarterNumber
+centreInspectorUserName
+
+20. 
+http://localhost:3030/api/smart/v1/trainingcentre/cm/report?isExcel=no&pageNo=1&limit=10 -GET
+http://localhost:3030/api/smart/v1//trainingcentre/cm/report?isExcel=yes -GET
+
+----
+1. FOR CI
+Inspection Assigned
+CIAccepted
+CIRejected
+CIDONE
+
+2. FOR QC
+Inspection Assigned - Un Marked
+CIAccepted - CIAccepted
+CIRejected - CIRejected
+CIDONE - Inspected
+ACTIONTAKEN - Marked
+
+api/smart/v1/trainingcentre/cm/list/user?query=typeOfRequest:assesmentRequest,jobRole.sectorID:40&pageNo=1&limit=10 -GET
+
+api/smart/v1/trainingcentre/cm/list/user?query=typeOfRequest:inspectionRequest,jobRole.sectorID:40&pageNo=1&limit=10 -GET

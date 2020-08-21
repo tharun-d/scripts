@@ -1,0 +1,42 @@
+1. TC type NON PMKK then request always should go to IA
+2. TC type PMKK first time it should go to PMKK SPOC,
+3. TC type PMKK after SSC taking action if they again apply request should go to IA
+4. TC type PMKK SPOKE first time it should go to PMKK SPOC,
+5. TC type PMKK SPOKE after SSC taking action if they again apply request should go to IA
+6. TC type Government and TP type Government institute then request go to HA
+7. TC type Government and TP type is not Government institute then request go to IA
+
+###############################################
+
+when deaccrediated happens
+1. TC type NON PMKK or Goverment
+    SSC status Accrediated or Conditionally Accrediated --> 1 year validation
+2. TC type PMKK or PMKK SPOKE
+    Conditionally Accrediated --> 1 year validation
+    Accrediated --> 2 year validation
+
+##############################################
+
+AEBAS verification will goes to HA
+NISBURD verification will goes to IA
+
+
+##############################################
+TC level 
+
+First Time
+fill and payment
+
+after Demmed Ready
+payment and fill 
+
+-------------
+TP level
+
+First Time
+fill and payment
+
+
+after Demmed Ready
+payment and fill 
+#############################################

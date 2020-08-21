@@ -1,0 +1,28 @@
+1. /api/smart/v1/refund/residential/fees/{tcId} --GET
+o/p:{
+"available":""
+}
+if returns 500 means no payment done show popup with required details
+2. /api/smart/v1/tccaaf/process/amount --POST
+
+processType:refund
+process:Residential Facility DA Fee 'or' Residential Facility Inspection Fee
+
+3. /api/smart/v1/refund/residential-- POST
+process :Residential Facility DA Fee 'or' Residential Facility Inspection Fee
+bankDetails
+----------------------------
+
+residentialFacilities.status - ongoing
+residentialFacilities.status -- Residential WithDrawl Pending - dont show option to apply again for residential 
+residentialFacilities.status -- Residential WithDrawl Accepted - show option to apply again for residential
+
+---------------------------------------
+-- Message center
+TC applied for residential withdwal
+Finance spoc approved residential withdrawl Remarks okk
+finance spoc rejected residential withdrawl Remarks not ok bankdetails wrong
+
+
+6b75790a409c24540bf665f30b788345faa0625a
+qc, ci still to do

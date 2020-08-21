@@ -1,0 +1,47 @@
+//TC770037 -non pmkk
+//TC600047 - pmkk
+Previous data
+
+this.selectedTCAppeal['inspectionAgency'] = this.userDetails.userName;
+            this.selectedTCAppeal['iaComments'] = this.appealActionCentreForm.get('comment').value;
+            this.selectedTCAppeal['documentsByIA'] = this.appealActionCentreForm.get('document').value;
+            this.selectedTCAppeal['status'] = appealStatus;
+            this.selectedTCAppeal['requestAgainst'] = this.selectedTCAppeal.requestAgainst;
+
+-----------------------------------------------------------------
+
+New Data
+
+if this.selectedTCAppeal['status'] == "Justification Submitted from IA"
+this.selectedTCAppeal['inspectionAgency'] = this.userDetails.userName;
+            this.selectedTCAppeal['iaComments'] = this.appealActionCentreForm.get('comment').value;
+            this.selectedTCAppeal['documentsByIA'] = this.appealActionCentreForm.get('document').value;
+            this.selectedTCAppeal['status'] = appealStatus;
+            this.selectedTCAppeal['requestAgainst'] = this.selectedTCAppeal.requestAgainst;
+
+if this.selectedTCAppeal['status'] == "Clarification Submitted from IA"
+this.selectedTCAppeal['inspectionAgency'] = this.userDetails.userName;
+            this.selectedTCAppeal['clarificationiaComments'] = this.appealActionCentreForm.get('comment').value;
+            this.selectedTCAppeal['documentsByIA'] = this.appealActionCentreForm.get('document').value;
+            this.selectedTCAppeal['status'] = appealStatus;
+            this.selectedTCAppeal['requestAgainst'] = this.selectedTCAppeal.requestAgainst;
+
+
+----------
+data to show in IA pop up
+
+if status == Applied for Justification from IA
+tcJustification
+if status == TC Asking Clarification from IA
+tcClarification
+------------
+
+data to show in TC pop up
+
+if status == Justification Submitted from IA
+iaComments
+if status == Clarification Submitted from IA
+clarificationiaComments
+
+----------
+
