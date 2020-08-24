@@ -1,5 +1,5 @@
 mongodump --db ekaushalnsdc -c trainingcentre -q '{userName:"TC000053"}' -o /home/tharun/Desktop/TC00053_original
-mongorestore --db ekaushalnsdc tcappealandreinspection.bson
+mongorestore --db ekaushalnsdc equimentdetails_Aug_10.bson
 
 mongodump -d ekaushalnsdc -c smarttc_26jun2020 -q '{processType: "Accreditation & Affiliation"}' -o temp27 --gzip
 

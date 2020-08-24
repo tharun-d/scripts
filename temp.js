@@ -557,7 +557,7 @@ tcIds.forEach(data => {
             tcData["status"] = "Rejected"
 
             db.trainingcentre.save(tcData)
-            
+
         } else {
             print(data, tcData["status"])
         }

@@ -33,7 +33,7 @@ function qpUpdationWithEuip() {
         }
     }
     for (qpKey in grpByQPcode) {
-        //db.getCollection('qps').updateMany({ "qpCode": qpKey }, { "$set": { "eqptDetails": grpByQPcode[qpKey], "isEqpUptd": true } });
+        db.getCollection('qps').updateMany({ "qpCode": qpKey }, { "$set": { "eqptDetails": grpByQPcode[qpKey], "isEqpUptd": true } });
         printjson(cnt++)
     }
 
@@ -64,4 +64,17 @@ db.getCollection('equimentdetails_Aug_10').find({}, {
         },
         { arrayFilters: [{ 'jobRole.eqptName': x['eqptName'] }] }
     )
+})
+
+db.qps.find({}).forEach(data => {
+    if (data["eqptDetails"]) {
+        for (var i = 0; i < data["eqptDetails"].length; i++) {
+            data["eqptDetails"][i]["eqptID"] = new ObjectId().toString()
+            data["eqptDetails"][i]["status"] = "Active"
+            data["eqptDetails"][i]["updatedOn"] = new Date()
+            data["eqptDetails"][i]["createdOn"] = new Date()
+        }
+        data["equipmentStatus"] = "Active"
+    }
+    db.qps.save(data)
 })
