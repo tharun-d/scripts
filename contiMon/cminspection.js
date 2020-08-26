@@ -410,4 +410,19 @@ db.smarttc_26jun2020.find({
     "jobRoles.sscStatus": { "$in": ["Conditionally Accrediated", "Accrediated"] }
 }, { userName: 1, rating: 1, _id: 0 }).toArray()
 
+//
+a = db.trainingcentre.aggregate([
+    { "$match": { "processType": "Accreditation & Affiliation" } },
+    { "$unwind": "$jobRoles" },
+    { "$match": { "jobRoles.scheme.name": { "$in": ["MIDH (Mission for Integrated Horticulture)", "RKVY (Rashtriya Krishi Vikas Yojna)"] } } },
+    {
+        "$project": {
+            "userName": 1, "_id": 0, "qp": "$jobRoles.qp",
 
+        }
+    },
+]).toArray()
+
+a.forEach( data => {
+    print(data["userName"])
+})
