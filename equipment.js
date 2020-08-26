@@ -69,7 +69,7 @@ db.getCollection('equimentdetails_Aug_10').find({}, {
 db.qps.find({}).forEach(data => {
     if (data["eqptDetails"]) {
         for (var i = 0; i < data["eqptDetails"].length; i++) {
-            data["eqptDetails"][i]["eqptID"] = new ObjectId().toString()
+            data["eqptDetails"][i]["eqptID"] = new ObjectId().str
             data["eqptDetails"][i]["status"] = "Active"
             data["eqptDetails"][i]["updatedOn"] = new Date()
             data["eqptDetails"][i]["createdOn"] = new Date()
@@ -78,3 +78,62 @@ db.qps.find({}).forEach(data => {
     }
     db.qps.save(data)
 })
+
+db.qps.updateMany({}, { "$unset": { "eqptDetails": "" } })
+db.qps.find({ "qpCode": { "$exists": true } }).forEach(y => {
+    var eqptDetails = []
+    db.equimentdetails_Aug_21.find({ "QPCode": y["qpCode"] }).forEach(x => {
+        var object = {}
+        var minEquipReq = {}
+        object["QPCode"] = y["qpCode"]
+        object["eqptID"] = new ObjectId().str
+        if (x['eqptName']) {
+            object["eqptName"] = x['eqptName']
+        }
+        if (x['minQtyReq']) {
+            object["minQtyReq"] = x["minQtyReq"]
+        }
+        if (x['unitType']) {
+            object["unitType"] = x["unitType"]
+        }
+        if (x['mandatoryEqptAvailableToTC']) {
+            object["mandatoryEqptAvailableToTC"] = x["mandatoryEqptAvailableToTC"]
+        }
+        if (x['for20Trainees']) {
+            minEquipReq["for20Trainees"] = x["for20Trainees"]
+        }
+        if (x['for25Trainees']) {
+            minEquipReq["for25Trainees"] = x["for25Trainees"]
+        }
+        if (x['for30Trainees']) {
+            minEquipReq["for30Trainees"] = x["for30Trainees"]
+
+        }
+        object["minEquipReq"] = minEquipReq
+        object["status"] = "Active"
+        object["updatedOn"] = new Date()
+        object["createdOn"] = new Date()
+
+        eqptDetails.push(object);
+    })
+    db.qps.update({ "_id": y["_id"] }, { "$set": { "eqptDetails": eqptDetails } })
+})
+
+
+count = 0
+db.qps.aggregate([
+    { "$project": { "isActive": 1, "status": 1, "eqptDetails": 1, "qpCode": 1, "nsqfLevel": 1, "jobRole": 1, "sectors.sectorName": 1 } },
+    { "$unwind": "$eqptDetails" },
+    {
+        "$match": {
+            "isActive": true,
+            "status.statusID": { "$in": ["6", "8"] },
+            "eqptDetails.status": { "$in": ["Active", ""] },
+        }
+    },
+    { "$sort": { "eqptDetails.createdOn": -1 } },
+
+]).forEach(data => {
+    count = count + 1
+})
+print(count)

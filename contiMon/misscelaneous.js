@@ -78,12 +78,12 @@ db.trainingcentre.update(
 )
 db.trainingcentre.update(
     {
-        "userName": "TC920028",
+        "userName": "TC100412",
     },
     {
         $set: {
-            "spoc.email": "tharun.d@transneuron.com",
-            "spoc.mobileNumber": NumberLong(9490285247),
+            "spoc.email": "atul.upadhaya@nsdcindia.org",
+            "spoc.mobileNumber": NumberLong(9891976260),
 
         }
     }
