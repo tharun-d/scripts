@@ -999,7 +999,7 @@ db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "jobRoles
 
             finalData["qpCode"] = tcData["jobRoles"][i]["qp"]
             if (tcData["jobRoles"][i]["associatedTrainer"]) {
-                for (var j = 0; i < tcData["jobRoles"][i]["associatedTrainer"].length; j++) {
+                for (var j = 0; j < tcData["jobRoles"][i]["associatedTrainer"].length; j++) {
 
                     finalData["_id"] = new ObjectId()
                     finalData["trainerId"] = tcData["jobRoles"][i]["associatedTrainer"][j]["userName"]
@@ -1057,11 +1057,10 @@ db.smartTempTOT.find({}).forEach(dr => {
         finalData["tcId"] = tcData["userName"]
 
         for (var i = 0; i < tcData["jobRoles"].length; i++) {
-            if (tcData["jobRoles"][i]["qp"] == dr["Qp Code"]) {
-
+            if (tcData["jobRoles"][i]["qp"] == dr["QP Code"]) {
                 finalData["qpCode"] = tcData["jobRoles"][i]["qp"]
                 if (tcData["jobRoles"][i]["associatedTrainer"]) {
-                    for (var j = 0; i < tcData["jobRoles"][i]["associatedTrainer"].length; j++) {
+                    for (var j = 0; j < tcData["jobRoles"][i]["associatedTrainer"].length; j++) {
 
                         finalData["_id"] = new ObjectId()
                         finalData["trainerId"] = tcData["jobRoles"][i]["associatedTrainer"][j]["userName"]
@@ -1095,6 +1094,7 @@ db.smartTempTOT.find({}).forEach(dr => {
                             finalData["totCertified"] = "No"
                         }
                         db.smartFinalDataTOT.insert(finalData)
+                        
                     }
                 }
 
