@@ -14,3 +14,6 @@ mongoimport --db=ekaushalnsdc --collection=tempcidata --type=csv --headerline --
 scp ec2-user@13.233.175.254:/home/ec2-user/cmInspectionlogic.csv .
 //From local to 254
 scp file.txt ec2-user@13.233.175.254:/home/ec2-user/
+
+mongoexport -d ekaushalnsdc -c loginData --type=csv --fields userName,sector,email,loginTime, -o loginData.csv
+

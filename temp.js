@@ -979,76 +979,81 @@ db.inspectionagency.updateMany({ "userName": { "$in": ["PI0001", "PQ0001"] } },
 
 
 db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "jobRoles": { "$exists": true } }).forEach(tcData => {
-    var finalData = {}
-    finalData["tcId"] = tcData["userName"]
+
     aebasCount = db.tcworkflow.find({
         "tcId": tcData["userName"],
         "status": "Approved",
         "requestType": { "$in": ["Aebas Request"] },
     }).count()
-    if (aebasCount > 0) {
-        finalData["Aebas"] = "Approved"
-    } else {
-        finalData["Aebas"] = "Not Approved"
-    }
 
-    for (var i = 0; i < tcData["jobRoles"].length; i++) {
-        if (tcData["jobRoles"][i]["scheme"] && tcData["jobRoles"][i]["scheme"]["name"] &&
-            tcData["jobRoles"][i]["scheme"]["name"] == "MIDH (Mission for Integrated Horticulture)" ||
-            tcData["jobRoles"][i]["scheme"]["name"] == "RKVY (Rashtriya Krishi Vikas Yojna)") {
+    if (tcData["jobRoles"]) {
+        for (var i = 0; i < tcData["jobRoles"].length; i++) {
+            if (tcData["jobRoles"][i]["scheme"] && tcData["jobRoles"][i]["scheme"]["name"]) {
 
-            finalData["qpCode"] = tcData["jobRoles"][i]["qp"]
-            if (tcData["jobRoles"][i]["associatedTrainer"]) {
-                for (var j = 0; j < tcData["jobRoles"][i]["associatedTrainer"].length; j++) {
+                if (tcData["jobRoles"][i]["scheme"]["name"] == "MIDH (Mission for Integrated Horticulture)" || tcData["jobRoles"][i]["scheme"]["name"] == "RKVY (Rashtriya Krishi Vikas Yojna)") {
 
-                    finalData["_id"] = new ObjectId()
-                    finalData["trainerId"] = tcData["jobRoles"][i]["associatedTrainer"][j]["userName"]
-                    var associatedTrFromTot = db.trainer.aggregate([
-                        {
-                            $match: {
-                                "userName":
-                                    tcData["jobRoles"][i]["associatedTrainer"][j]["userName"],
-                            }
-                        },
-                        { $unwind: "$jobRoles" },
-                        {
-                            $match: {
-                                "jobRoles.jobRoleId": finalData["qpCode"],
-                                "jobRoles.isCertified": true
-                            }
-                        }, {
-                            $project: {
-                                _id: 0,
-                                "jobRoles.isCertified": 1
+                    if (tcData["jobRoles"][i]["associatedTrainer"]) {
+                        for (var j = 0; j < tcData["jobRoles"][i]["associatedTrainer"].length; j++) {
+
+                            if (tcData["jobRoles"][i]["associatedTrainer"][j]) {
+                                var finalData = {}
+                                finalData["qpCode"] = tcData["jobRoles"][i]["qp"]
+                                finalData["tcId"] = tcData["userName"]
+                                finalData["_id"] = new ObjectId()
+                                finalData["trainerId"] = tcData["jobRoles"][i]["associatedTrainer"][j]["userName"]
+                                var associatedTrFromTot = db.trainer.aggregate([
+                                    {
+                                        $match: {
+                                            "userName":
+                                                tcData["jobRoles"][i]["associatedTrainer"][j]["userName"],
+                                        }
+                                    },
+                                    { $unwind: "$jobRoles" },
+                                    {
+                                        $match: {
+                                            "jobRoles.jobRoleId": finalData["qpCode"],
+                                            "jobRoles.isCertified": true
+                                        }
+                                    }, {
+                                        $project: {
+                                            _id: 0,
+                                            "jobRoles.isCertified": 1
+                                        }
+                                    }
+                                ]).toArray()
+                                if (associatedTrFromTot) {
+                                    if (associatedTrFromTot.length != 0) {
+                                        finalData["totCertified"] = "Yes"
+                                    } else {
+                                        finalData["totCertified"] = "No"
+                                    }
+                                } else {
+                                    finalData["totCertified"] = "No"
+                                }
+                                niesCount = db.tcworkflow.find({
+                                    "tcId": tcData["userName"],
+                                    "status": "Approved",
+                                    "requestType": { "$in": ["NIESBUDRequest"] },
+                                    "CATCData.associatedTrainer.userName": tcData["jobRoles"][i]["associatedTrainer"][j]["userName"]
+                                }).count()
+                                if (niesCount > 0) {
+                                    finalData["NIESBURD"] = "Yes"
+                                } else {
+                                    finalData["NIESBURD"] = "No"
+                                }
+                                if (aebasCount > 0) {
+                                    finalData["Aebas"] = "Approved"
+                                } else {
+                                    finalData["Aebas"] = "Not Approved"
+                                }
+                                db.smartTempTOT.insert(finalData)
                             }
                         }
-                    ]).toArray()
-                    if (associatedTrFromTot) {
-                        if (associatedTrFromTot.length != 0) {
-                            finalData["totCertified"] = "Yes"
-                        } else {
-                            finalData["totCertified"] = "No"
-                        }
-                    } else {
-                        finalData["totCertified"] = "No"
-                    }
-                    niesCount = db.tcworkflow.find({
-                        "tcId": tcData["userName"],
-                        "status": "Approved",
-                        "requestType": { "$in": ["NIESBUDRequest"] },
-                        "CATCData.associatedTrainer.userName": tcData["jobRoles"][i]["associatedTrainer"][j]["userName"]
-                    }).count()
-                    if (niesCount > 0) {
-                        finalData["NIESBURD"] = "Yes"
-                    } else {
-                        finalData["NIESBURD"] = "No"
                     }
                 }
             }
-
         }
     }
-
 })
 
 db.smartTempTOT.find({}).forEach(dr => {
@@ -1094,11 +1099,28 @@ db.smartTempTOT.find({}).forEach(dr => {
                             finalData["totCertified"] = "No"
                         }
                         db.smartFinalDataTOT.insert(finalData)
-                        
+
                     }
                 }
 
             }
         }
     })
+})
+
+count = 0 
+db.ssc.find({ type: "SMART" }).forEach(data => {
+    loginhistory = db.loginhistory.find({ "username": data["userName"] }).sort({ "_id": -1 }).toArray()
+    var finalData = {}
+    if (loginhistory.length > 0) {
+        finalData["_id"] = new ObjectId()
+        finalData["userName"] = data["userName"]
+        finalData["sector"] = data["sector"]["name"]
+        finalData["email"] = data["email"]
+        finalData["loginTime"] = loginhistory[0]["loginTime"]
+        count = count +1
+        print(count)
+        db.loginData.save(finalData)
+
+    }
 })

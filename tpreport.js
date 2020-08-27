@@ -118,17 +118,14 @@ count = 0
 tpIds.forEach(data => {
     tpData = db.trainingpartner.findOne({ "userName": data, "isSmart": true })
     workflow = db.tpworkflow.find({ tpId: data, status: { "$in": ["DAAPPROVED", "DAREJECTED"] }, "toUsersRole": "Inspection Agency", "migration": { "$exists": false } }).sort({ "createdOn": -1 }).toArray()
-    paymentWorkFlow = db.payments.find({ "userId": data, "isComplete": true, "migration": { "$exists": false } }).sort({ "_id": -1 }).toArray()
-    if (workflow.length > 0 && paymentWorkFlow.length > 0) {
-        if (paymentWorkFlow[0]["date"] > tpData["updatedOn"]) {
-            tpData["updatedOn"] = paymentWorkFlow[0]["date"]
-            workflow[0]["createdOn"] = paymentWorkFlow[0]["date"]
-            workflow[0]["actionTakenOn"] = paymentWorkFlow[0]["date"]
+    //paymentWorkFlow = db.payments.find({ "userId": data, "isComplete": true, "migration": { "$exists": false } }).sort({ "_id": -1 }).toArray()
+    if (workflow.length > 0) {
+        if (workflow[0]["createdOn"] > tpData["updatedOn"]) {
+            tpData["updatedOn"] = workflow[0]["createdOn"]
             count++
         }
     }
     db.trainingpartner.save(tpData)
-    db.tpworkflow.save(workflow)
 })
 print(count)
 
