@@ -291,3 +291,19 @@ tpIds.forEach(data => {
 })
 
 db.trainingpartner.find({ userName: "TP057641" }, { "daReviews.date": 1 }).pretty()
+
+db.trainingpartner.find({ "isSmart": false, "tpSchemeDetails.approvalProcess": "aa", "updatedOn": { "$gte": ISODate("2020-03-00T00:00:00Z") } }).forEach(data => {
+
+    workflow = db.tpworkflow.find({
+        createdOn: { "$gte": ISODate("2020-03-00T00:00:00Z") },
+        tpId: data["userName"],
+        "toUsersRole": "Inspection Agency",
+        "migration": { "$exists": false },
+        "scheme": { "$exists": false }
+    }).toArray()
+    if (workflow.length > 0) {
+
+        data["isSmart"] = true
+        db.trainingpartner.save(data)
+    }
+})

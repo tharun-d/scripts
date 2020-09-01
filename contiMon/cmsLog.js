@@ -131,7 +131,7 @@ db.cmStatusLog.updateMany({},
 db.cmStatusLog.remove({})
 db.tccontinuousmonitoring.remove({})
 db.cmworkflow.remove({})
-db.trainingcentre.updateMany({ "userName": { "$in": ["TC106583"] } },
+db.trainingcentre.updateMany({ "userName": { "$in": ["TC104517"] } },
 	{ $set: { "spoc.mobileNumber": NumberLong("7827286018"), "spoc.email": "mahesh.k@transneuron.com" } })
 db.trainingpartner.updateMany({ "userName": { "$in": ["TP000137", "TP004020"] } },
 	{ $set: { "spoc.mobileNumber": NumberLong("9490285247"), "spoc.email": "tharun.d@transneuron.com" } })

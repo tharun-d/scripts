@@ -968,14 +968,14 @@ tcIds.forEach(data => {
     }
 })
 
-db.ssc.updateMany({ userName: { "$in": ["SSC1114", "SSC1116", "SSC1112"] } },
-    { "$set": { "email": "atul.upadhaya@nsdcindia.org" } })
+db.ssc.updateMany({},
+    { "$set": { "email": "atu.upadhaya@nsdcindia.org" } })
 
-db.trainingcentre.updateMany({ "userName": { "$in": ["TC109797", "TC105311", "TC105956"] } },
-    { $set: { "spoc.mobileNumber": NumberLong("7827286018"), "spoc.email": "atul.upadhaya@nsdcindia.org" } })
+db.trainingcentre.updateMany({ "userName": { "$in": ["TC104517", "TC105311", "TC105956"] } },
+    { $set: { "spoc.mobileNumber": NumberLong("7827286018"), "spoc.email": "atu.upadhaya@nsdcindia.org" } })
 
-db.inspectionagency.updateMany({ "userName": { "$in": ["PI0001", "PQ0001"] } },
-    { "$set": { "email": "atul.upadhaya@nsdcindia.org" } })
+db.inspectionagency.updateMany({},
+    { "$set": { "email": "atu.upadhaya@nsdcindia.org" } })
 
 
 db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "jobRoles": { "$exists": true } }).forEach(tcData => {
@@ -1108,7 +1108,7 @@ db.smartTempTOT.find({}).forEach(dr => {
     })
 })
 
-count = 0 
+count = 0
 db.ssc.find({ type: "SMART" }).forEach(data => {
     loginhistory = db.loginhistory.find({ "username": data["userName"] }).sort({ "_id": -1 }).toArray()
     var finalData = {}
@@ -1118,9 +1118,36 @@ db.ssc.find({ type: "SMART" }).forEach(data => {
         finalData["sector"] = data["sector"]["name"]
         finalData["email"] = data["email"]
         finalData["loginTime"] = loginhistory[0]["loginTime"]
-        count = count +1
+        count = count + 1
         print(count)
         db.loginData.save(finalData)
 
     }
 })
+
+db.trainingcentre.aggregate([{
+    "$match":
+    {
+        "$and": [{ "createdOn": { "$type": "date" } }],
+        "trainingCenterType": { "$in": ["PMKK", "PMKK SPOKE"] },
+        "processType": "Accreditation & Affiliation",
+        "$or": [
+            {
+                "status": {
+                    "$nin": ["init",
+                        "TC_CREATED",
+                        "paymentAwaiting",
+                        "blocked",
+                        "Deactivated/blocked",
+                        "INACTIVE",
+                        "DEACCREDIATED",
+                        "applicationWithDrawl",]
+                }
+            },
+            {
+                "status": "applicationWithDrawl",
+                "financeSpocStatusForApplicationWithdrawl": "Request for Refund",
+            }
+        ],
+    }
+}])

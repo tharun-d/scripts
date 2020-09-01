@@ -70,6 +70,15 @@ print("removing: ", count)
 
 
 db.tcworkflow.update({ "_id": ObjectId("5e7b4ffcd38b750337f0d610") },
-    { "$set": { "conversation.2.actionTakenOn": ISODate("2020-07-24T10:50:31.707Z") } })
+    { "$set": { "conversation.2.actionTakenOn": ISODate("2020-08-01T10:50:31.707Z") } })
 
-    //TC109804
+//TC109804
+count = 0
+db.tcworkflow.find({ status: "Reach out IA", "jobRole.qp": { "$exists": true }, "migration": { "$exists": true } }).sort({ "_id": -1 }).forEach(data => {
+    count++
+    len = data["conversation"].length
+    print(data["conversation"][len - 1]["actionTakenByRole"])
+})
+print(count)
+
+db.tcworkflow.remove({ "_id": ObjectId("5e7b4ffcd38b750337f0d610") })
