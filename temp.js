@@ -1125,29 +1125,4 @@ db.ssc.find({ type: "SMART" }).forEach(data => {
     }
 })
 
-db.trainingcentre.aggregate([{
-    "$match":
-    {
-        "$and": [{ "createdOn": { "$type": "date" } }],
-        "trainingCenterType": { "$in": ["PMKK", "PMKK SPOKE"] },
-        "processType": "Accreditation & Affiliation",
-        "$or": [
-            {
-                "status": {
-                    "$nin": ["init",
-                        "TC_CREATED",
-                        "paymentAwaiting",
-                        "blocked",
-                        "Deactivated/blocked",
-                        "INACTIVE",
-                        "DEACCREDIATED",
-                        "applicationWithDrawl",]
-                }
-            },
-            {
-                "status": "applicationWithDrawl",
-                "financeSpocStatusForApplicationWithdrawl": "Request for Refund",
-            }
-        ],
-    }
-}])
+

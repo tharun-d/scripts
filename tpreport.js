@@ -302,7 +302,7 @@ db.trainingpartner.find({ "isSmart": false, "tpSchemeDetails.approvalProcess": "
         "scheme": { "$exists": false }
     }).toArray()
     if (workflow.length > 0) {
-
+        print(data["userName"])
         data["isSmart"] = true
         db.trainingpartner.save(data)
     }

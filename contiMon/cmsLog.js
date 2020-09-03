@@ -512,9 +512,16 @@ data = [
 ]
 
 data.forEach(x => {
-	
+
 	tpData = db.trainingpartner.findOne({ "spoc.email": x }, { userName: 1 })
 	if (tpData && tpData["userName"]) {
 		print(x)
-	} 
+	}
 })
+
+
+db.tcworkflow.updateMany({ "assignedNextUserRole": "Inspection Agency", zone: "IMAC" },
+	{ "$set": { "assignedNextUser": "PI0006", } })
+
+db.tcworkflow.updateMany({ "assignedNextUserRole": "Inspection Agency", zone: "QACA" },
+	{ "$set": { "assignedNextUser": "PQ0001", } })
