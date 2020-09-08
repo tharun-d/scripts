@@ -330,3 +330,10 @@ db.tcappealandreinspection.find({
     }
 })
 print("removed data: ", count)
+
+
+db.tcappealandreinspection.find({
+    "status": {
+        "$in": ["Applied for Justification from IA", "Applied for Justification from SSC", "Applied for Justification from PMKK SPOC", "Applied for Justification from SCPWD"]
+    }
+}).count()

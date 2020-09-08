@@ -43,3 +43,10 @@ db.payments.find({ "refund.status": "Refunded", "userId": /TC/ }).forEach(x => {
 db.refundPayments.updateMany({ referenceType: "Appeal" }, { "$set": { "processType": "Appeal Refund", "referenceType": "Appeal Process Fee" } })
 
 db.refundPayments.find({ "userName": "TC1900", "processType": "Application WithDrawl" }, { "createdOn": 1 }).pretty()
+
+db.refundPayments.find({ "processType": "Application WithDrawl", status: "Approve" }, { userName: 1 }).forEach(data => {
+    db.trainingcentre.find({ userName: data["userName"] }).forEach(tcData => {
+        tcData["status"] = "applicationWithDrawl"
+        db.trainingcentre.save(tcData)
+    })
+})

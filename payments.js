@@ -62,3 +62,46 @@ db.payments.find({
     "responseMetadata.order_id":
         { $in: ["ORD_44945", "ORD_33849", "ORD_28512", "ORD_12809", "ORD_37308", "ORD_33631", "ORD_30900", "ORD_37340", "ORD_19870", "20190412125111833250848", "20180228143323597154002", "20180313111547237157330", "20173231728135631893", "ORD_2758", "ORD_2320"] }
 }, { "refund": 1 }).pretty()
+
+
+
+db.payments.find({
+    userId: "TP000377",
+    "requestMetadata.subscriptionDetails.referenceType": { "$in": ["TP Re-DA Fees"] }, "isComplete": true
+}, { "requestMetadata.subscriptionDetails": 1 })
+
+db.payments.find({
+    "requestMetadata.subscriptionDetails.referenceType": { "$in": ["TP Re-DA Fees"] }, "isComplete": true
+}, { "requestMetadata.subscriptionDetails.name": 1 }).sort({ "_id": -1 }).pretty()
+
+ordIds = [
+    "201711918517429",
+    "20175171425584414641",
+    "20180702163835860181586",
+    "2018072812183080197814",
+    "20180525185836130171156",
+    "20180719164427547195887",
+    "2018052512286610170939",
+    "2018061115322097176540",
+    "201752187763110310",
+    "20180615224927767177865",
+    "ORD_37437",
+    "2017471746714679639",
+    "2017521718103967411",
+    "20180728121139487197812",
+    "ORD_28512",
+]
+
+ordIds.forEach(id => {
+    db.payments.find({ "responseMetadata.order_id": id }).forEach(paymentsData => {
+        print(paymentsData["userId"])
+        paymentsData["paymentRefundStatus"] = "Approve"
+        db.payments.save(paymentsData)
+        db.trainingcentre.find({ userName: paymentsData["userId"] }).forEach(tcData => {
+            tcData["oldTCStatus"] = tcData["status"]
+            tcData["status"] = "applicationWithDrawl"
+            tcData["financeSpocStatusForApplicationWithdrawl"] = "Approve"
+            db.trainingcentre.save(tcData)
+        })
+    })
+})
