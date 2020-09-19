@@ -105,3 +105,12 @@ ordIds.forEach(id => {
         })
     })
 })
+
+db.payments.find({ "responseMetadata.order_id": "ORD_23688" }, { userId: 1 }).pretty()
+
+db.trainingcentre.find({ userName: "TC025166" }).forEach(tcData => {
+    tcData["oldTCStatus"] = tcData["status"]
+    tcData["status"] = "applicationWithDrawl"
+    tcData["financeSpocStatusForApplicationWithdrawl"] = "Approve"
+    db.trainingcentre.save(tcData)
+})

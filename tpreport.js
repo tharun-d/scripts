@@ -307,3 +307,38 @@ db.trainingpartner.find({ "isSmart": { "$exists": false }, "tpSchemeDetails.appr
         //db.trainingpartner.save(data)
     }
 })
+
+count = 0
+db.trainingpartner.find({ "isSmart": true, status: { "$in": ["approved", "DAREJECTED"] } }).forEach(data => {
+    workflow = db.tpworkflow.find({ tpId: data["userName"], status: { "$in": ["DAAPPROVED", "DAREJECTED"] }, "toUsersRole": "Inspection Agency", "migration": { "$exists": false } }).sort({ "createdOn": -1 }).toArray()
+    paymentWorkFlow = db.payments.find({ "userId": data["userName"], "isComplete": true, "migration": { "$exists": false } }).sort({ "_id": -1 }).toArray()
+    if (workflow.length > 0 && paymentWorkFlow.length > 0) {
+
+        transDate = paymentWorkFlow[0]["date"]
+        if (data["updatedOn"] < transDate) {
+            data["updatedOn"] = transDate
+            data["submittedOn"] = transDate
+            count++
+
+            if (data["submittedOn"] > workflow[0]["actionTakenOn"]) {
+                print(data["userName"])
+            }
+            db.trainingpartner.save(data)
+        }
+    }
+})
+print(count)
+
+db.trainingpartner.find({ "isSmart": false, "tpSchemeDetails.approvalProcess": "aa", "updatedOn": { "$gte": ISODate("2020-03-00T00:00:00Z") } }).forEach(data => {
+    workflow = db.tpworkflow.find({
+        createdOn: { "$gte": ISODate("2020-03-00T00:00:00Z") },
+        tpId: data["userName"],
+        "toUsersRole": "Inspection Agency",
+        "migration": { "$exists": false },
+    }).sort({ "_id": -1 }).limit(1).toArray()
+    if (workflow.length > 0 && !workflow[0]['scheme']) {
+        printjson(workflow[0]['tpId'])
+        data["isSmart"] = true
+        //db.trainingpartner.save(data)
+    }
+})

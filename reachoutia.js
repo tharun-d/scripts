@@ -42,9 +42,9 @@ count = 0
 db.tcworkflow.find({ status: "Reach out IA", "jobRole.qp": { "$exists": true } }).forEach(data => {
     tcData = db.trainingcentre.findOne({ "userName": data["tcId"], "jobRoles.qp": data["jobRole"]["qp"] }, { "jobRoles.$": 1 })
     if (tcData) {
-        print(tcData["jobRoles"][0]["status"])
+        //print(tcData["jobRoles"][0]["status"])
     } else {
-        db.tcworkflow.remove({ "_id": data["_id"] })
+        //db.tcworkflow.remove({ "_id": data["_id"] })
         count++
     }
 })
@@ -58,7 +58,8 @@ db.tcworkflow.find({ status: "Reach out IA", "jobRole.qp": { "$exists": true } }
     if (iaData) {
         //print(data["tcId"], data["jobRole"]["qp"])
     } else {
-        db.tcworkflow.remove({ "_id": data["_id"] })
+        print(data["tcId"], data["jobRole"]["qp"])
+        //db.tcworkflow.remove({ "_id": data["_id"] })
         count++
     }
 })

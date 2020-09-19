@@ -1,6 +1,6 @@
-db.trainingcentre.find({ "userName": "TC114423" }).forEach(tcVal => {
+db.trainingcentre.find({ "userName": "TC117781" }).forEach(tcVal => {
     tcVal.jobRoles.forEach(jrVal => {
-        if (jrVal.qp == "LSC/Q1120") {
+        if (jrVal.qp == "CON/Q0602") {
             var qpsvalue = db.qps.findOne({ qpCode: jrVal["qp"] }, { "sectors": 1 })
             var findQueryssc = {}
             findQueryssc["sector.id"] = parseInt(qpsvalue["sectors"]["sectorID"])
@@ -41,10 +41,11 @@ db.trainingcentre.find({ "userName": "TC114423" }).forEach(tcVal => {
     })
 })
 
-db.trainingcentre.update({ userName: "TC114423", "jobRoles.qp": "LSC/Q1120" }, {
+db.trainingcentre.update({ userName: "TC117781", "jobRoles.qp": "CON/Q0602" }, {
     "$set": {
         "jobRoles.$.status": "QC Conditionally Recommended",
-        "jobRoles.$.qcStatus": "QC Conditionally Recommended"
+        "jobRoles.$.qcStatus": "QC Conditionally Recommended",
+        "jobRoles.$.maxCapacity": 120
     }
 })
 

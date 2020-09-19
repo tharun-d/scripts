@@ -1,5 +1,5 @@
 db.smartmessagecenter.find({ "tcid": "TC126134" })
-db.smartmessagecenter.find({ "tcid": "TC041534" }, { "stages": 1 })
+db.smartmessagecenter.find({ "tcid": "TC107330" }, { "stages": 1 })
 db.smartmessagecenter.insert(
     {
         "tcid": "TC126358",
@@ -189,28 +189,28 @@ db.smartmessagecenter.update({ "tcid": "TC041534" }, { "$set": { "stages": stage
 db.smartmessagecenter.update({ "tcid": "TC117629" }, { "$pop": { "stages": 1 } })
 
 //TC117697
-stages = [
-    {
-        "stage": "Application No. Generated.",
-        "stageDate": ISODate("2019-12-28T13:05:31.748Z")
-    },
-    {
-        "stage": "CAAF submitted and application is under assessment. At this stage, you cannot edit your CAAF.",
-        "stageDate": ISODate("2019-12-29T12:17:56.975Z")
-    },
-    {
-        "stage": "Application is marked as ‘Deemed Not Ready’ (1st Time). You can re-submit the CAAF.",
-        "stageDate": ISODate("2019-12-30T06:48:19.585Z")
-    },
-    {
-        "stage": "TC applied for Centre Withdrawl.",
-        "stageDate": ISODate("2020-03-15T20:06:47.959Z")
-    },
-    {
-        "stage": "Finance SPOC has approved the withdrawal request. Remarks: Account Holder as TP Name.",
-        "stageDate": ISODate("2020-06-19T11:11:56.886Z")
-    }
-]
+
 
 db.smartmessagecenter.update({ "tcid": "TC129415" }, { "$pop": { "stages": 1 } })
 db.smartmessagecenter.update({ "tcid": "TC129415" }, { "$pop": { "messages": 1 } })
+
+
+stages = [
+    {
+        "stage": "TC generated.",
+        "stageDate": ISODate("2019-09-03T04:48:32.838Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2019-09-27T10:24:10.834Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2019-09-30T06:02:14.272Z")
+    },
+    {
+        "stage": "TC applied for Centre Withdrawl.",
+        "stageDate": ISODate("2020-09-30T07:59:29.512Z")
+    },
+]
+db.smartmessagecenter.update({ "tcid": "TC107330" }, { "$set": { "stages": stages } })

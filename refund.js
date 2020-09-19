@@ -42,11 +42,21 @@ db.payments.find({ "refund.status": "Refunded", "userId": /TC/ }).forEach(x => {
 
 db.refundPayments.updateMany({ referenceType: "Appeal" }, { "$set": { "processType": "Appeal Refund", "referenceType": "Appeal Process Fee" } })
 
-db.refundPayments.find({ "userName": "TC1900", "processType": "Application WithDrawl" }, { "createdOn": 1 }).pretty()
+db.refundPayments.find({ "userName": "TC059233", "processType": "Application WithDrawl" }).pretty()
 
 db.refundPayments.find({ "processType": "Application WithDrawl", status: "Approve" }, { userName: 1 }).forEach(data => {
     db.trainingcentre.find({ userName: data["userName"] }).forEach(tcData => {
         tcData["status"] = "applicationWithDrawl"
         db.trainingcentre.save(tcData)
     })
+})
+
+db.refundPayments.update({ "userName": "TC059233", processType: "Application WithDrawl" }, {
+    "$set": {
+        "trackingId": "109802908682",
+        "orderId": "ORD_43448",
+        "paymentId": "5e74670ed36b8c0014c96002",
+        "referenceType": "Re-Inspection Fee",
+        "transactionDate": ISODate("2020-03-20T06:47:42.773Z"),
+    }
 })

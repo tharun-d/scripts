@@ -1231,3 +1231,37 @@ tcIds.forEach(data => {
         db.trainingcentre.save(tcData)
     })
 })
+
+commonMobile = 0
+canBeResolved = 0
+db.trainingcentre.aggregate([
+    { "$match": { "processType": "Accreditation & Affiliation" } },
+    { "$group": { _id: "$spoc.mobileNumber", userName: { "$push": "$userName" }, myCount: { $sum: 1 } } },
+    { "$match": { "myCount": { "$gt": 1 } } },
+    { "$project": { _id: 0, userName: "$userName" } },
+]).forEach(data => {
+    commonMobile = commonMobile + 1
+    c = db.users.distinct("phone.mobile", { "userName": { "$in": data["userName"] } })
+    if (c.length == data["userName"].length) {
+        canBeResolved = canBeResolved + c.length
+    }
+})
+print(commonMobile)
+print(canBeResolved)
+
+commonMobile = 0
+canBeResolved = 0
+db.trainingcentre.aggregate([
+    { "$match": { "processType": "Accreditation & Affiliation" } },
+    { "$group": { _id: "$spoc.email", userName: { "$push": "$userName" }, myCount: { $sum: 1 } } },
+    { "$match": { "myCount": { "$gt": 1 } } },
+    { "$project": { _id: 0, userName: "$userName" } },
+]).forEach(data => {
+    commonMobile = commonMobile + 1
+    c = db.users.distinct("email", { "userName": { "$in": data["userName"] } })
+    if (c.length == data["userName"].length) {
+        canBeResolved = canBeResolved + c.length
+    }
+})
+print(commonMobile)
+print(canBeResolved)

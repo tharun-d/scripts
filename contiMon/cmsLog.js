@@ -520,8 +520,16 @@ data.forEach(x => {
 })
 
 
-db.tcworkflow.updateMany({ "assignedNextUserRole": "Inspection Agency", zone: "IMAC" },
-	{ "$set": { "assignedNextUser": "PI0006", } })
+states = ["HARYANA", "JHARKHAND", "CHHATTISGARH", "GUJARAT", "UTTAR PRADESH", "CHANDIGARH", "DELHI", "MADHYA PRADESH", "GOA", "RAJASTHAN", "PUNJAB"]
 
-db.tcworkflow.updateMany({ "assignedNextUserRole": "Inspection Agency", zone: "QACA" },
-	{ "$set": { "assignedNextUser": "PQ0001", } })
+db.trainingcentre.find({ "address.state.name": { "$in": states }, "processType": "Accreditation & Affiliation", "continuousMonitoringPayment": "success" }).sort({ "_id": -1 }).limit(100).forEach(data => {
+	data["spoc"]["mobileNumber"] = NumberLong("9490285247")
+	data["spoc"]["email"] = "tharun.d@transneuron.com"
+	db.trainingcentre.save(data)
+})
+
+db.trainingcentre.find({ "address.state.name": { "$in": states }, "processType": "Accreditation & Affiliation", "continuousMonitoringPayment": "success" }).sort({ "_id": -1 }).skip(100).limit(100).forEach(data => {
+	data["spoc"]["mobileNumber"] = NumberLong("949028524")
+	data["spoc"]["email"] = "mahesh.k@transneuron.com"
+	db.trainingcentre.save(data)
+})
