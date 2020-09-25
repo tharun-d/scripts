@@ -1,6 +1,7 @@
 http://localhost:3030/api/smart/v1/trainingcentre/cm/startjob
 http://13.233.175.254/api/smart/v1/trainingcentre/cm/startjob
 https://uatservices.ekaushal.com/api/smart/v1/trainingcentre/cm/startjob
+https://sdmsservices.nsdcindia.org/api/smart/v1/trainingcentre/cm/startjob --prod
 
 http://localhost:3030/api/smart/v1/trainingcentre/cm/startcaluclatemarksjob
 http://13.233.175.254/api/smart/v1/trainingcentre/cm/startcaluclatemarksjob
@@ -122,3 +123,6 @@ ACTIONTAKEN - Marked
 api/smart/v1/trainingcentre/cm/list/user?query=typeOfRequest:assesmentRequest,jobRole.sectorID:40&pageNo=1&limit=10 -GET
 
 api/smart/v1/trainingcentre/cm/list/user?query=typeOfRequest:inspectionRequest,jobRole.sectorID:40&pageNo=1&limit=10 -GET
+
+
+

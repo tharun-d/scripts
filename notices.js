@@ -541,12 +541,11 @@ db.notices.insertMany(
         }
     ]
 )
-
+db.notices.remove({})
 db.notices.insert(
-
     {
-        "heading": "Instructions in Hindi",
-        "link": "http://www.pmkvyofficial.org/App_Documents/News/Process_for_operationalization_of_allocation_of_targets_to_Franchise_centers_310817.docx",
+        "heading": "User manual for Continuous Monitoring – TC Mobile App",
+        "link": "https://nsdcpdfdocuments.s3.ap-south-1.amazonaws.com/documents/SMART/TC_Continou_Monitoring.pdf",
         "createdOn": new Date(),
         "status": "active"
     }

@@ -214,3 +214,380 @@ stages = [
     },
 ]
 db.smartmessagecenter.update({ "tcid": "TC107330" }, { "$set": { "stages": stages } })
+
+db.smartmessagecenter.update({ "tcid": "TC107330" }, { "$pop": { "stages": 1 } })
+
+stages = {
+    "stage": "TC applied for Centre Withdrawl.",
+    "stageDate": ISODate("2019-09-30T07:59:29.512Z")
+}
+db.smartmessagecenter.update({ "tcid": "TC107330" }, { "$push": { "stages": stages } })
+
+stages = [
+    {
+        "stage": "Application No. Generated.",
+        "stageDate": ISODate("2020-01-02T09:08:01.119Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, you cannot edit your CAAF.",
+        "stageDate": ISODate("2020-02-01T10:15:30.829Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ (1st Time). You can re-submit the CAAF.",
+        "stageDate": ISODate("2020-02-03T09:12:12.941Z")
+    },
+    {
+        "stage": "Your Application is Under assessment (2nd Time).At this stage, you cannot edit your CAAF",
+        "stageDate": ISODate("2020-02-26T12:10:51.368Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. You have last chance to submit your application.",
+        "stageDate": ISODate("2020-02-27T07:03:00.030Z")
+    },
+    {
+        "stage": "Your Application is Under assessment (3rd Time).At this stage, you cannot edit your CAAF.",
+        "stageDate": ISODate("2020-02-28T10:52:11.481Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, you cannot edit your CAAF.",
+        "stageDate": ISODate("2020-03-03T08:22:51.107Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st time. You can re-submit the CAAF.",
+        "stageDate": ISODate("2020-03-04T10:30:12.228Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 3rd time. Hence, blocked. You can pay the Unblocking fees to re-submit CAAF.",
+        "stageDate": ISODate("2020-03-05T07:59:40.986Z")
+    }
+]
+
+db.smartmessagecenter.update({ "tcid": "TC118069" }, { "$set": { "stages": stages } })
+
+////
+
+//TC128592
+stages = [
+    {
+        "stage": "TC generated.",
+        "stageDate": ISODate("2020-05-21T08:32:58.465Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-22T07:45:51.370Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2020-05-26T03:21:31.735Z")
+    },
+    {
+        "stage": "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-26T07:29:22.614Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate": ISODate("2020-05-27T06:26:40.460Z")
+    },
+    {
+        "stage": "Application is Under assessment (3rd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-28T07:26:20.525Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 3rd time. Hence, blocked. TC can pay the Unblocking fees to re-submit CAAF.",
+        "stageDate": ISODate("2020-05-29T11:59:29.814Z")
+    },
+    {
+        "stage": "Application has been Un-blocked. You can edit & submit your CAAF again.",
+        "stageDate": ISODate("2020-06-16T12:37:21.642Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-24T08:41:49.293Z")
+    },
+    {
+        "stage": "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate": ISODate("2020-06-24T18:29:16.738Z")
+    }
+]
+db.smartmessagecenter.update({ "tcid": "TC128592" }, { "$set": { "stages": stages } })
+
+//TC128265
+stages = [
+
+    {
+        "stage": "TC generated.",
+        "stageDate": ISODate("2020-05-01T15:10:44.268Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-10T06:00:49.481Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2020-06-12T10:02:13.541Z")
+    },
+    {
+        "stage": "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-12T16:05:58.579Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate": ISODate("2020-06-15T14:22:46.749Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-24T08:41:49.286Z")
+    },
+    {
+        "stage": "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate": ISODate("2020-06-25T03:29:29.900Z")
+    }
+]
+db.smartmessagecenter.update({ "tcid": "TC128265" }, { "$set": { "stages": stages } })
+
+
+//TC127760
+stages = [
+    {
+        "stage": "TC generated.",
+        "stageDate": ISODate("2020-03-25T05:36:03.180Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-23T15:00:01.145Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2020-05-26T13:51:50.589Z")
+    },
+    {
+        "stage": "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-01T11:11:38.312Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate": ISODate("2020-06-02T06:53:26.009Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-24T08:41:49.281Z")
+    },
+    {
+        "stage": "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate": ISODate("2020-06-25T03:19:53.943Z")
+    }
+
+]
+db.smartmessagecenter.update({ "tcid": "TC127760" }, { "$set": { "stages": stages } })
+
+//TC128167
+stages = [
+    {
+        "stage": "TC generated.",
+        "stageDate": ISODate("2020-04-24T13:44:12.660Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-04-29T14:34:35.791Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2020-04-30T16:50:14.438Z")
+    },
+    {
+        "stage": "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-07T13:42:30.826Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate": ISODate("2020-05-08T06:53:36.466Z")
+    },
+    {
+        "stage": "Application is Under assessment (3rd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-09T12:20:27.440Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 3rd time. Hence, blocked. TC can pay the Unblocking fees to re-submit CAAF.",
+        "stageDate": ISODate("2020-05-11T08:00:25.039Z")
+    },
+    {
+        "stage": "Application has been Un-blocked. You can edit & submit your CAAF again.",
+        "stageDate": ISODate("2020-05-18T06:44:38.902Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-26T07:32:11.374Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2020-05-27T06:45:40.709Z")
+    },
+    {
+        "stage": "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-05-27T07:41:01.447Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate": ISODate("2020-05-29T03:25:21.309Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-24T08:41:49.283Z")
+    },
+    {
+        "stage": "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate": ISODate("2020-06-24T18:40:05.824Z")
+    },
+    {
+        "stage": "Applied for scheme approval for Electrician Domestic Solutions  job role",
+        "stageDate": ISODate("2020-06-25T10:14:54.205Z")
+    },
+    {
+        "stage": "Applied for scheme approval for Self Employed Tailor job role",
+        "stageDate": ISODate("2020-06-25T10:16:29.828Z")
+    },
+    {
+        "stage": "Application has not been approved for Self Employed Tailor job roles, by respective scheme.Please note only the scheme approved job roles would be inspected. In case of re-inspection, already inspected Job Roles mapped to respective scheme would be inspected",
+        "stageDate": ISODate("2020-07-09T08:58:57.917Z")
+    },
+    {
+        "stage": "Application has not been approved for Electrician Domestic Solutions  job roles, by respective scheme.Please note only the scheme approved job roles would be inspected. In case of re-inspection, already inspected Job Roles mapped to respective scheme would be inspected",
+        "stageDate": ISODate("2020-07-09T08:59:09.310Z")
+    },
+    {
+        "stage": "Applied for scheme approval for Electrician Domestic Solutions  job role",
+        "stageDate": ISODate("2020-07-10T11:06:45.116Z")
+    },
+    {
+        "stage": "Applied for scheme approval for Self Employed Tailor job role",
+        "stageDate": ISODate("2020-07-10T11:10:58.270Z")
+    },
+    {
+        "stage": "Application has been approved for Electrician Domestic Solutions  job roles, by respective scheme.Please note only the scheme approved job roles would be inspected. In case of re-inspection, already inspected Job Roles mapped to respective scheme would be inspected",
+        "stageDate": ISODate("2020-08-20T10:32:48.493Z")
+    }
+]
+db.smartmessagecenter.update({ "tcid": "TC128167" }, { "$set": { "stages": stages } })
+
+//TC129326
+stages = [
+    {
+        "stage": "TC generated.",
+        "stageDate": ISODate("2020-06-08T10:08:27.191Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment (1st Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-09T11:39:19.151Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 1st Time. TC can re-submit the CAAF.",
+        "stageDate": ISODate("2020-06-10T06:04:01.447Z")
+    },
+    {
+        "stage": "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-11T07:13:51.506Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate": ISODate("2020-06-12T12:43:46.581Z")
+    },
+    {
+        "stage": "Application is Under assessment (3rd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-14T11:20:56.284Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 3rd time. Hence, blocked. TC can pay the Unblocking fees to re-submit CAAF.",
+        "stageDate": ISODate("2020-06-15T06:53:25.062Z")
+    },
+    {
+        "stage": "Application has been Un-blocked. You can edit & submit your CAAF again.",
+        "stageDate": ISODate("2020-06-15T15:52:56.290Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-24T08:41:49.298Z")
+    },
+    {
+        "stage": "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate": ISODate("2020-06-25T05:24:02.073Z")
+    }
+]
+db.smartmessagecenter.update({ "tcid": "TC129326" }, { "$set": { "stages": stages } })
+
+//TC113545
+stages = [
+    {
+        "stage": "Application No. Generated.",
+        "stageDate": ISODate("2019-11-20T06:03:42.731Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, you cannot edit your CAAF.",
+        "stageDate": ISODate("2020-01-14T05:04:09.025Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ (1st Time). You can re-submit the CAAF.",
+        "stageDate": ISODate("2020-01-17T10:14:22.498Z")
+    },
+    {
+        "stage": "Your Application is Under assessment (2nd Time).At this stage, you cannot edit your CAAF",
+        "stageDate": ISODate("2020-02-05T13:09:47.141Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 2nd time. You have last chance to submit your application.",
+        "stageDate": ISODate("2020-02-06T10:38:54.142Z")
+    },
+    {
+        "stage": "Your Application is Under assessment (3rd Time).At this stage, you cannot edit your CAAF.",
+        "stageDate": ISODate("2020-02-21T04:31:04.666Z")
+    },
+    {
+        "stage": "Application is marked as ‘Deemed Not Ready’ 3rd time. Hence, blocked. You can pay the Unblocking fees to re-submit CAAF.",
+        "stageDate": ISODate("2020-02-21T09:34:09.916Z")
+    },
+    {
+        "stage": "Application has been Un-blocked. You can edit & submit your CAAF again.",
+        "stageDate": ISODate("2020-05-31T06:10:05.876Z")
+    },
+    {
+        "stage": "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate": ISODate("2020-06-24T08:41:49.260Z")
+    },
+    {
+        "stage": "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate": ISODate("2020-06-24T15:11:03.023Z")
+    }
+]
+db.smartmessagecenter.update({ "tcid": "TC113545" }, { "$set": { "stages": stages } })
+
+//TC119118
+stages = [
+    {
+        "stage" : "Application No. Generated.",
+        "stageDate" : ISODate("2020-01-10T07:45:10.689Z")
+    },
+    {
+        "stage" : "CAAF submitted and application is under assessment. At this stage, you cannot edit your CAAF.",
+        "stageDate" : ISODate("2020-02-01T07:32:32.639Z")
+    },
+    {
+        "stage" : "Application is marked as ‘Deemed Not Ready’ (1st Time). You can re-submit the CAAF.",
+        "stageDate" : ISODate("2020-02-03T11:07:19.917Z")
+    },
+    {
+        "stage" : "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
+        "stageDate" : ISODate("2020-06-08T10:00:52.616Z")
+    },
+    {
+        "stage" : "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
+        "stageDate" : ISODate("2020-06-09T09:52:26.108Z")
+    },
+    {
+        "stage" : "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
+        "stageDate" : ISODate("2020-06-24T08:41:49.271Z")
+    },
+    {
+        "stage" : "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
+        "stageDate" : ISODate("2020-06-24T17:19:25.419Z")
+    }
+]
+db.smartmessagecenter.update({ "tcid": "TC119118" }, { "$set": { "stages": stages } })
