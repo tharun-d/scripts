@@ -96,3 +96,34 @@ if (data) {
         print("done")
     db.cmworkflow.insert(data)
 }
+
+count = 0
+db.cmworkflow.find({ "assignedNextUserRole": "SSC" }).forEach(data => {
+
+    data["assignedNextUserRole"] = "Inspection Agency"
+
+    if (data["zone"] == "IMAC") {
+        data["assignedNextUser"] = "PI0006"
+    } else {
+        data["assignedNextUser"] = "PQ0001"
+    }
+    db.cmworkflow.save(data)
+    count = count + 1
+})
+print(count)
+
+
+db.trainingcentre.find({ "jobRoles": { "$exists": true }, continuousMonitoringPayment: "success" }).forEach(data => {
+
+    length = data["jobRoles"].length
+    count = 0
+    data["jobRoles"].forEach(jb => {
+        if (jb["sscStatus"] && jb["sscStatus"] == "deaccrediated")
+            count = count + 1
+    })
+    if (count == length) {
+        print(data["userName"])
+        data["continuousMonitoringPayment"] = ""
+    }
+    db.trainingcentre.save(data)
+})

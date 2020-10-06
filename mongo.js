@@ -261,7 +261,9 @@ db.trainingcentre.update({ userName: "TC032846" },
     {
         $set:
         {
-            "jobRoles.2.classroom": ["Classroom 2"], "jobRoles.2.laboratory": ["Lab 2"]
+            "jobRoles.2.classroom": ["Classroom 2"], 
+            "jobRoles.2.laboratory": ["Lab 2"],
+            "jobRoles.2.hybrid": ["Lab 2"]
         }
     })
 

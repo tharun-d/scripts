@@ -1,0 +1,16 @@
+/api/user/v1/blockaccessoftptc -- GET request
+
+response true or false	
+
+true means block or else not block
+
+smart-patch-25-aug merged in 254
+
+db.blocktpandtc.insert({
+    "tpId":"TP048865"
+    })
+
+
+db.blocktpandtc.remove({
+    "tpId":"hello"
+    })
