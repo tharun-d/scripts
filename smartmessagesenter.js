@@ -559,35 +559,161 @@ stages = [
 ]
 db.smartmessagecenter.update({ "tcid": "TC113545" }, { "$set": { "stages": stages } })
 
-//TC119118
+//TC041205
 stages = [
     {
-        "stage" : "Application No. Generated.",
-        "stageDate" : ISODate("2020-01-10T07:45:10.689Z")
+        "stage" : "Your Application is Under Assessment Review.",
+        "stageDate" : ISODate("2018-05-01T00:00:00Z"),
+        "actionType" : "TC1",
+        "prevstgDate" : "2018-05-01T17:23:30+0530"
+    },
+    {
+        "stage" : "CAAF submitted successfully as application fees is paid. Your Application is Under Review.",
+        "stageDate" : ISODate("2018-03-12T00:00:00Z"),
+        "actionType" : "Sav",
+        "prevstgDate" : "2018-03-12T12:26:56+0530"
+    },
+    {
+        "stage" : "Your Application is Under Re-assessment Review (Second Time).",
+        "stageDate" : ISODate("2018-03-23T00:00:00Z"),
+        "actionType" : "TC1",
+        "prevstgDate" : "2018-03-23T18:3:8+0530"
+    },
+    {
+        "stage" : "TC has accepted Inspection date as 30/03/2018.",
+        "stageDate" : ISODate("2018-03-27T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-03-27T12:50:47+0530"
+    },
+    {
+        "stage" : "Application is marked as Deemed Not Ready by DA for (First Time).",
+        "stageDate" : ISODate("2018-05-02T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-05-02T17:54:3+0530"
+    },
+    {
+        "stage" : "TC has accepted Inspection date as 14/05/2018.",
+        "stageDate" : ISODate("2018-05-05T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-05-05T13:7:48+0530"
+    },
+    {
+        "stage" : "Application is marked as Deemed Ready by DA. Your application is now assigned to Inspection Agency for Inspection Scheduling.",
+        "stageDate" : ISODate("2018-03-24T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-03-24T17:52:27+0530"
+    },
+    {
+        "stage" : "SSC has marked the Job Role as Accredited. Please pay Continuous Monitoring Fees and Affiliation Fees.",
+        "stageDate" : ISODate("2018-05-23T00:00:00Z"),
+        "actionType" : "1",
+        "prevstgDate" : "2018-05-23T12:21:19+0530"
+    },
+    {
+        "stage" : "Inspection date has been assigned to your Centre by Inspection Agency.",
+        "stageDate" : ISODate("2018-05-05T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-05-05T12:52:17+0530"
+    },
+    {
+        "stage" : "Application is marked as Deemed Ready by DA. Your application is now assigned to Inspection Agency for Inspection Scheduling.",
+        "stageDate" : ISODate("2018-05-03T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-05-03T15:56:50+0530"
+    },
+    {
+        "stage" : "Applied for Re-Inspection with changes in CAAF.",
+        "stageDate" : ISODate("2018-05-01T00:00:00Z"),
+        "actionType" : "Sav",
+        "prevstgDate" : "2018-05-01T16:23:18+0530"
+    },
+    {
+        "stage" : "Training Centre is marked as Not Qualified by Inspection Agency. You may proceed with Re-inspection or Appeal (within 7 days of receiving inspection report)",
+        "stageDate" : ISODate("2018-04-02T00:00:00Z"),
+        "actionType" : "Sav",
+        "prevstgDate" : "2018-04-02T19:39:32+0530"
+    },
+    {
+        "stage" : "Application is marked as Deemed Not Ready by DA for (First Time).",
+        "stageDate" : ISODate("2018-03-19T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-03-19T11:32:47+0530"
+    },
+    {
+        "stage" : "Centre marked as Affiliated.",
+        "stageDate" : ISODate("2018-05-24T00:00:00Z"),
+        "actionType" : "1",
+        "prevstgDate" : "2018-05-24T15:22:37+0530"
+    },
+    {
+        "stage" : "Inspection date has been assigned to your Centre by Inspection Agency.",
+        "stageDate" : ISODate("2018-03-27T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-03-27T12:31:11+0530"
+    },
+    {
+        "stage" : "SMART Application Alert",
+        "stageDate" : ISODate("2018-03-24T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-03-24T17:52:27+0530"
+    },
+    {
+        "stage" : "Your Application is Under Re-assessment Review (Second Time).",
+        "stageDate" : ISODate("2018-05-02T00:00:00Z"),
+        "actionType" : "TC1",
+        "prevstgDate" : "2018-05-02T21:32:6+0530"
+    },
+    {
+        "stage" : "Training Centre is marked as Not Qualified by Inspection Agency. You may proceed with Re-inspection or Appeal (within 7 days of receiving inspection report)",
+        "stageDate" : ISODate("2018-04-02T00:00:00Z"),
+        "actionType" : "Sav",
+        "prevstgDate" : "2018-04-02T19:42:13+0530"
+    },
+    {
+        "stage" : "Inspection completed on 02/04/2018. Your Inspection Report is Under Evaluation.",
+        "stageDate" : ISODate("2018-04-02T00:00:00Z"),
+        "actionType" : "Sav",
+        "prevstgDate" : "2018-04-02T19:29:17+0530"
+    },
+    {
+        "stage" : "SMART Application Alert",
+        "stageDate" : ISODate("2018-05-03T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-05-03T15:56:50+0530"
+    },
+    {
+        "stage" : "Training Centre is marked as Qualified by Inspection Agency. Kindly check the Job Role Status under Job Role Wise application status Tab. You may opt Appeal Process if you have any grievances within 7 days of receiving Inspection report.",
+        "stageDate" : ISODate("2018-05-15T00:00:00Z"),
+        "actionType" : "Sav",
+        "prevstgDate" : "2018-05-15T15:49:17+0530"
+    },
+    {
+        "stage" : "SMART Application Alert",
+        "stageDate" : ISODate("2018-06-18T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-06-18T11:50:20+0530"
+    },
+    {
+        "stage" : "TC has applied for Re-DA. TC can edit/update and submit the CAAF",
+        "stageDate" : ISODate("2019-11-13T00:00:00Z"),
+        "actionType" : "",
+        "prevstgDate" : "2018-06-18T11:50:20+0530"
     },
     {
         "stage" : "CAAF submitted and application is under assessment. At this stage, you cannot edit your CAAF.",
-        "stageDate" : ISODate("2020-02-01T07:32:32.639Z")
+        "stageDate" : ISODate("2019-11-19T13:45:32.876Z")
     },
     {
-        "stage" : "Application is marked as ‘Deemed Not Ready’ (1st Time). You can re-submit the CAAF.",
-        "stageDate" : ISODate("2020-02-03T11:07:19.917Z")
+        "stage" : "Application is marked as 'Deemed Not Ready' (1st Time). You can re-submit the CAAF.",
+        "stageDate" : ISODate("2019-11-20T07:51:17.331Z")
     },
     {
-        "stage" : "Application is Under assessment (2nd Time). At this stage, TC cannot edit the CAAF.",
-        "stageDate" : ISODate("2020-06-08T10:00:52.616Z")
+        "stage" : "Your Application is Under assessment (2nd Time).At this stage, you cannot edit your CAAF",
+        "stageDate" : ISODate("2019-11-20T11:52:48.439Z")
     },
     {
-        "stage" : "Application is marked as ‘Deemed Not Ready’ 2nd time. Last chance to submit the CAAF.",
-        "stageDate" : ISODate("2020-06-09T09:52:26.108Z")
-    },
-    {
-        "stage" : "CAAF submitted and application is under assessment. At this stage, TC cannot edit the CAAF.",
-        "stageDate" : ISODate("2020-06-24T08:41:49.271Z")
-    },
-    {
-        "stage" : "TC has been accorded 'Deemed Ready' status. Letter of Registration (LoR) has been generated. TC can apply for inspection once at-least one job role is Scheme Approved.",
-        "stageDate" : ISODate("2020-06-24T17:19:25.419Z")
+        "stage" : "Your application is now Deemed Ready. LOR has been generated. You can download the same from the job role wise application status dashboard. You can apply for inspection once you get scheme approval for at-least one job role.",
+        "stageDate" : ISODate("2019-11-21T06:15:36.318Z")
     }
 ]
-db.smartmessagecenter.update({ "tcid": "TC119118" }, { "$set": { "stages": stages } })
+db.smartmessagecenter.update({ "tcid": "TC041205" }, { "$set": { "stages": stages } })

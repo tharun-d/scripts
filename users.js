@@ -97,21 +97,35 @@ db.users.insert(
 
 db.desktopassessor.insert(
     {
-        "firstName" : "Govind Prasad",
-        "userName" : "DA_000009",
-        "email" : "Govind.prasad@imacs.net.in",
-        "role" : "Desktop Assessor",
-        "password" : "$2a$10$tugmOsB3JRjARNPPMUyPP.kR/igGwrEqC5TL6PCaX6TiC4lL1MR7G",
-        "hasChangedDefPass" : false,
-        "phone" : {
-            "mobile" : NumberLong(123456789)
+        "firstName": "Govind Prasad",
+        "userName": "DA_000009",
+        "email": "Govind.prasad@imacs.net.in",
+        "role": "Desktop Assessor",
+        "password": "$2a$10$tugmOsB3JRjARNPPMUyPP.kR/igGwrEqC5TL6PCaX6TiC4lL1MR7G",
+        "hasChangedDefPass": false,
+        "phone": {
+            "mobile": NumberLong(123456789)
         },
-        "belogsTo" : "IMAC",
-        "migratedfrom" : "SMART",
-        "belongsTo" : [
+        "belogsTo": "IMAC",
+        "migratedfrom": "SMART",
+        "belongsTo": [
             "PI0006",
             "IMaCS_Inspector_0001"
         ]
     }
-    
+
+)
+
+db.users.update({ userName: "TC770054" },
+    {
+        "$set": {
+            "password": "jj",
+            "hasChangedDefPass": true,
+        }, "$push": {
+            "passwordHistory": {
+                "password": "ss",
+                "changedOn": "",
+            },
+        }
+    }
 )

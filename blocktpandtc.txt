@@ -6,11 +6,20 @@ true means block or else not block
 
 smart-patch-25-aug merged in 254
 
+data = ["TP001069"]
+
+data.forEach(x => {
 db.blocktpandtc.insert({
-    "tpId":"TP048865"
+    "tpId":x
     })
+} )
+
 
 
 db.blocktpandtc.remove({
     "tpId":"hello"
+    })
+
+db.blocktpandtc.find({
+    "tpId":"TP000787"
     })
