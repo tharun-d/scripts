@@ -278,6 +278,12 @@ db.trainingpartner.find({ isSmart: true, "daReviews.date": { $type: 2 } }).forEa
     db.trainingpartner.save(data)
 })
 
+db.trainingpartner.find({ isSmart: true, "redaDate": { $type: 2 } }).forEach(data => {
+
+    print(data["userName"])
+    data.redaDate = new Date(data.redaDate)
+    //db.trainingpartner.save(data)
+})
 
 
 db.tcworkflow.update({ "_id": ObjectId("5dc3d4ac1a1dae0436e48d4e"), "tcId": "TC102036" }, {
@@ -1265,3 +1271,29 @@ db.trainingcentre.aggregate([
 })
 print(commonMobile)
 print(canBeResolved)
+
+db.trainingpartner.find({ "generalDetailsOfTP.yearOfEstablishment": { "$type": 2 } }).forEach(x => {
+    if (x['generalDetailsOfTP']['yearOfEstablishment'] && x['generalDetailsOfTP']['yearOfEstablishment'] != "") {
+        x['generalDetailsOfTP']['yearOfEstablishment'] = Number(x['generalDetailsOfTP']['yearOfEstablishment'])
+        db.trainingpartner.save(x)
+    }
+})
+
+db.trainingcentre.update({ userName: "TC056749" }, {
+    "$set": {
+        "address.state": {
+            "name": "MIZORAM",
+            "id": 15
+        },
+        "address.district": {
+            "name": "AIZAWL",
+            "id": 261
+        },
+        "address.subDistrict": {
+            "name": "AIZAWL"
+        },
+        "address.parliamentaryConstituency": {
+            "name": "Mizoram"
+        },
+    }
+})

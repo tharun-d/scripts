@@ -313,3 +313,46 @@ tcIds.forEach(data => {
     }
 })
 
+db.trainingcentre.find({
+    userName: { "$in": ["TC133625", "TC133441", "TC056120", "TC133756", "TC133439"] }
+},
+    { "address.state": 1 }).pretty()
+
+db.tcworkflow.remove({ tcId: "TC005128", "jobRole.qp": "RAS/Q0103" })
+
+
+db.tcworkflow.distinct("status", { migration: { "$exists": true }, assignedNextUserRole: "SSC" })
+
+db.tcworkflow.remove({
+    migration: { "$exists": true }, assignedNextUserRole: "SSC",
+    status: {
+        "$in": ['clarificationDone', 'New Request', 'Reach out IA', 'Reach out TC',
+            'No Response received from TC within TAT', 'No Response received from IA within TAT', 'appliedForReInspection']
+    }
+})
+
+db.tcworkflow.remove({
+    migration: { "$exists": true }, assignedNextUserRole: "Inspection Agency",
+    status: {
+        "$in": ['clarificationDone', 'askingDetailsFromIA',
+            'No Response received from IA within TAT', 'appliedForReInspection']
+    }
+})
+
+
+db.trainingcentre.update({ userName: "TC013872" }, { $unset: { "continuousMonitoringPayment": "" } })
+
+db.trainingpartner.find({ "userName": "TP001533" }).forEach(x => {
+    x['spoc'] = x['old_spoc']
+    delete x['isMnlUpt']
+    delete x['isMnlUptDt']
+    x['financial']['pan'] = x["old_pan"]
+    x['status'] = "Applied RE-DA"
+    delete x['deactivationRemarks']
+    x['isSmart'] = true
+    delete x['dayDiff']
+    db.trainingpartner.save(x)
+    db.users.update({ "userName": x['userName'] }, { "$set": { "email": x['spoc']['email'], "phone.mobile": x['spoc']['mobileNumber'] } })
+})
+
+db.trainingcentre.find({ userName: "TC107190" }, { "processType": 1 })

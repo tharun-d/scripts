@@ -261,7 +261,7 @@ db.trainingcentre.update({ userName: "TC032846" },
     {
         $set:
         {
-            "jobRoles.2.classroom": ["Classroom 2"], 
+            "jobRoles.2.classroom": ["Classroom 2"],
             "jobRoles.2.laboratory": ["Lab 2"],
             "jobRoles.2.hybrid": ["Lab 2"]
         }
@@ -526,3 +526,23 @@ db.trainingcentre.find({ userName: "TC110864" }).forEach(x => {
     print("updated inspectionDetails: ", x["inspectionDetails"][len - 1]["inspectiondate"])
     db.trainingcentre.save(x)
 })
+
+
+var count = 0
+db.getCollection('temptpreda').find({}).forEach(x => {
+    let payments = db.payments.findOne({ "userId": x['TP ID'], isComplete: true, date: { "$gte": ISODate("2020-02-20T03:46:06.106Z") } })
+    if (!payments) {
+        let workflow = db.tpworkflow.findOne({ "tpId": x['TP ID'], createdOn: { "$gte": ISODate("2020-02-20T03:46:06.106Z") } })
+        if (!workflow) {
+            let tpp = db.trainingpartner.findOne({ "userName": x["TP ID"], "redaDate": { '$exists': true } })
+            if (!tpp) {
+                print(x['TP ID'])
+                count++
+                db.blocktpandtc.insert({
+                    "tpId": x['TP ID']
+                })
+            }
+        }
+    }
+})
+print(count)

@@ -342,3 +342,4 @@ db.trainingpartner.find({ "isSmart": false, "tpSchemeDetails.approvalProcess": "
         //db.trainingpartner.save(data)
     }
 })
+

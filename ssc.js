@@ -1,6 +1,6 @@
-db.trainingcentre.find({ "userName": "TC117781" }).forEach(tcVal => {
+db.trainingcentre.find({ "userName": "TC122069" }).forEach(tcVal => {
     tcVal.jobRoles.forEach(jrVal => {
-        if (jrVal.qp == "CON/Q0602") {
+        if (jrVal.qp == "AMH/Q1947") {
             var qpsvalue = db.qps.findOne({ qpCode: jrVal["qp"] }, { "sectors": 1 })
             var findQueryssc = {}
             findQueryssc["sector.id"] = parseInt(qpsvalue["sectors"]["sectorID"])
@@ -41,23 +41,19 @@ db.trainingcentre.find({ "userName": "TC117781" }).forEach(tcVal => {
     })
 })
 
-db.trainingcentre.update({ userName: "TC117781", "jobRoles.qp": "CON/Q0602" }, {
+db.trainingcentre.update({ userName: "TC122069", "jobRoles.qp": "AMH/Q1947" }, {
     "$set": {
         "jobRoles.$.status": "QC Conditionally Recommended",
         "jobRoles.$.qcStatus": "QC Conditionally Recommended",
-        "jobRoles.$.maxCapacity": 120
     }
 })
 
-db.recommendation_report.update({ tcId: "TC114423", "jobRole.qpCode": "LSC/Q1120" },
-    { "$set": { "iaRecommendationStatus": "QC Conditionally Recommended" } })
 
-
-var mc = db.smartmessagecenter.findOne({ tcid: "TC114423" })
+var mc = db.smartmessagecenter.findOne({ tcid: "TC122069" })
 if (mc) {
 
     var stage = {
-        "stage": "Job role LSC/Q1120 status has been changed from not Recommended to conditionally recommended based on SR4456",
+        "stage": "Job role AMH/Q1947 status has been changed from not Recommended to conditionally recommended based on SR6405",
         "stageDate": new Date()
     }
     mc['stages'].push(stage)
@@ -99,8 +95,6 @@ db.trainingcentre.update({ userName: "TC1500482" }, {
     }
 })
 
-db.trainingcentre.update({ "userName": "TC042707" }, { "$unset": { "jobRoles.$[].praposalcode": "" } })
-
 var mc = db.smartmessagecenter.findOne({ tcid: "TC042707" })
 if (mc) {
 
@@ -112,3 +106,5 @@ if (mc) {
     printjson(mc['stages'][mc['stages'].length - 1])
     db.smartmessagecenter.save(mc)
 }
+
+db.trainingcentre.update({ "userName": "TC042707" }, { "$unset": { "jobRoles.$[].praposalcode": "" } })

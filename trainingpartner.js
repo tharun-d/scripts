@@ -50,3 +50,27 @@ db.trainingpartner.find({ "generalDetailsOfTP.typeOfOrganisation": { "$exists": 
 
 
 db.trainingpartner.update({ "userName": "TP005079" }, { "$set": { "financial.pan": "AAATB5657N" } })
+
+
+data = [
+    "TP004441",
+    "TP000744",
+    "TP007000",
+    "TP001795",
+    "TP004288",
+    "TP000115",
+    "TP005358",
+    "TP001754",
+    "TP002922",
+    "TP006997",
+    "TP002330",
+    "TP001342",
+    "TP001133",
+    "TP008830",
+    "TP007893",
+]
+
+data.forEach(x => {
+   tpData = db.trainingpartner.findOne({ userName: x })
+   print(tpData["redaDate"])
+})
