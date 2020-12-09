@@ -544,8 +544,8 @@ db.notices.insertMany(
 db.notices.remove({})
 db.notices.insert(
     {
-        "heading": "User manual for Continuous Monitoring – TC Mobile App",
-        "link": "https://nsdcpdfdocuments.s3.ap-south-1.amazonaws.com/documents/SMART/TC_Continou_Monitoring.pdf",
+        "heading": "Extension in validity of Conditionally Accredited and Accredited training centres on Skill India Portal",
+        "link": "https://nsdcpublicdocuments.s3.ap-south-1.amazonaws.com/smartnotices/Notice_on_Conditional_Accreditation_and_Accreditation_of_TCs_on_SIP_till_31stDecember2020.pdf",
         "createdOn": new Date(),
         "status": "active"
     }

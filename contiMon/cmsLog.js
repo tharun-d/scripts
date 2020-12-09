@@ -2,7 +2,7 @@ db.cmStatusLog.remove({})
 db.cmStatusLog.find({})
 db.cmStatusLog.insert(
 	{
-		"tcUserName": "TC1500362",
+		"tcUserName": "TC770049",
 		"year": 2020,
 		"dateCreated": new Date(),
 		"lastUpdated": new Date(),
@@ -55,12 +55,12 @@ db.cmStatusLog.insert(
 
 db.cmStatusLog.update(
 	{
-		"tcUserName": "TC105867",
+		"tcUserName": "TC770051",
 		"quarterNumber": 1,
 	},
 	{
 		$set: {
-			"notificationTime": ISODate("2020-08-18T00:00:00Z"),
+			"notificationDate": new Date(),
 		}
 	}
 )
@@ -246,3 +246,10 @@ db.cmStatusLog.find({}).count()
 13399
 db.cmStatusLog.find({ "notificationSent": true, "jobRoleSpecificStandardWhatToUpload.qp": { "$exists": false } }).count()
 0
+
+db.cmStatusLog.find({ "notificationSent": true, "marksAwarded": false, "skippedThisQuarter": false, "tcCompleted": false }).forEach(data => {
+
+	print(data["tcUserName"])
+
+	db.trainingcentre.update({ "userName": data["tcUserName"] }, { "$set": { "spoc.email": "tharun.d@transneuron.com" } })
+})

@@ -356,3 +356,37 @@ db.trainingpartner.find({ "userName": "TP001533" }).forEach(x => {
 })
 
 db.trainingcentre.find({ userName: "TC107190" }, { "processType": 1 })
+
+db.trainingcentre.update({ userName: "TC107190" },
+    { "$set": { "processType": "Accreditation & Affiliation", "trainingCenterType": "NON PMKK", "status": "ongoing" } })
+
+db.tcworkflow.remove({ "tcId": "TC107190" })
+tcVal = db.trainingcentre.findOne({ userName: "TC107190" })
+var IAworkflow = {
+    "_id": new ObjectId(),
+    "tcId": "TC107190",
+    "status": "ongoing",
+    "reqID": "Req1",
+    "zone": tcVal["address"]["zone"],
+    "state": tcVal["address"]["state"]["name"],
+    "addressLine": tcVal["address"]["addressLine"],
+    "district": tcVal["address"] && tcVal["address"]["district"] && tcVal["address"]["district"]["name"],
+    "createdOn": new Date(),
+    "actionTakenOn": new Date(),
+    "assignedNextUser": "PI0006",
+    "assignedNextUserRole": "Inspection Agency",
+    "spoc": tcVal["spoc"],
+    "trainingCentreName": tcVal["trainingCentreName"],
+    "trainingPartnerName": tcVal["trainingPartner"]["name"],
+    "trainingPartnerID": tcVal["trainingPartner"]["userName"],
+    "trainingCenterType": tcVal["trainingCenterType"],
+    "createdBy": "mongoscript",
+}
+db.tcworkflow.insert(IAworkflow)
+
+db.trainingcentre.update({ userName: "TC013872" }, {
+    $set: {
+        "continuousMonitoringPayment": "",
+        "status": "DEACCREDIATED"
+    }
+})

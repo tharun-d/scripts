@@ -280,9 +280,8 @@ db.trainingpartner.find({ isSmart: true, "daReviews.date": { $type: 2 } }).forEa
 
 db.trainingpartner.find({ isSmart: true, "redaDate": { $type: 2 } }).forEach(data => {
 
-    print(data["userName"])
     data.redaDate = new Date(data.redaDate)
-    //db.trainingpartner.save(data)
+    db.trainingpartner.save(data)
 })
 
 
@@ -1296,4 +1295,50 @@ db.trainingcentre.update({ userName: "TC056749" }, {
             "name": "Mizoram"
         },
     }
+})
+
+db.trainingcentre.find({
+    "jobRoles.status": "deaccrediated",
+    "processType": "Accreditation & Affiliation"
+}).forEach(y => {
+    var dc = y.jobRoles.length
+
+    var count = 0
+    for (var i = 0; i < y.jobRoles.length; i++) {
+        if (y.jobRoles[i] && y.jobRoles[i].status && y.jobRoles[i].sscStatus == "deaccrediated") {
+            count = ++count
+        }
+    }
+    if (count == dc) {
+        y.status = "DEACCREDIATED"
+        y.continuousMonitoringPayment = ""
+        db.trainingcentre.save(y)
+    }
+})
+
+data = [
+    "TP000048",
+    "TP000187",
+    "TP000200",
+    "TP000695",
+    "TP000929",
+    "TP001256",
+    "TP001340",
+    "TP001454",
+    "TP003215",
+    "TP003643",
+    "TP006997",
+    "TP008433",
+    "TP008627",
+    "TP008737",
+    "TP008919",
+    "TP008996",
+
+]
+
+data.forEach(x => {
+    data = db.trainingpartner.findOne({ userName: x })
+    print("tPId : ", x)
+    print("oldType : ", data["generalDetailsOfTP"]["oldTypeOfOrganisation"])
+    print("newType : ", data["generalDetailsOfTP"]["typeOfOrganisation"])
 })

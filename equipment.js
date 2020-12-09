@@ -137,3 +137,116 @@ db.qps.aggregate([
     count = count + 1
 })
 print(count)
+
+db.qps.find({ "qpCode": /BWS/ }).forEach(x => {
+
+
+    if (x["eqptDetails"]) {
+        for (let index = 0; index < x["eqptDetails"].length; index++) {
+            x["eqptDetails"][index]["status"] = "Active"
+        }
+    }
+
+})
+
+db.qps.updateMany({
+    "qpCode": {
+        $in: [
+            "BWS/Q3001",
+            "BWS/Q3003",
+            "BWS/Q2203",
+            "BWS/Q2201",
+            "BWS/Q0104",
+            "BWS/Q0102",
+            "BWS/Q0101",
+            "BWS/Q0202",
+            "BWS/Q0301",
+            "BWS/Q0201",
+            "BWS/Q0402",
+            "BWS/Q4001",
+            "BWS/Q0401",
+            "BWS/Q1001",
+            "BWS/Q2303",
+            "BWS/Q2301",
+            "BWS/Q0205",
+            "BWS/Q1002",
+            "BWS/Q0403",
+            "BWS/Q2302",
+            "BWS/Q2205"
+        ]
+    }
+}, {
+    "$unset": {
+        "eqptDetails": ""
+    }
+})
+db.qps.find({
+    "qpCode": {
+        $in: [
+            "BWS/Q3001",
+            "BWS/Q3003",
+            "BWS/Q2203",
+            "BWS/Q2201",
+            "BWS/Q0104",
+            "BWS/Q0102",
+            "BWS/Q0101",
+            "BWS/Q0202",
+            "BWS/Q0301",
+            "BWS/Q0201",
+            "BWS/Q0402",
+            "BWS/Q4001",
+            "BWS/Q0401",
+            "BWS/Q1001",
+            "BWS/Q2303",
+            "BWS/Q2301",
+            "BWS/Q0205",
+            "BWS/Q1002",
+            "BWS/Q0403",
+            "BWS/Q2302",
+            "BWS/Q2205"
+        ]
+    }
+}).forEach(y => {
+    var eqptDetails = []
+    db.equimentdetails_Nov_23.find({
+        "QPCode": y["qpCode"]
+    }).forEach(x => {
+        print(y["qpCode"])
+        var object = {}
+        var minEquipReq = {}
+        object["QPCode"] = y["qpCode"]
+        object["eqptID"] = new ObjectId().str
+        if (x['eqptName']) {
+            object["eqptName"] = x['eqptName']
+        }
+        if (x['minQtyReq']) {
+            object["minQtyReq"] = x["minQtyReq"]
+        }
+        if (x['unitType']) {
+            object["unitType"] = x["unitType"]
+        }
+        if (x['mandatoryEqptAvailableToTC']) {
+            object["mandatoryEqptAvailableToTC"] = x["mandatoryEqptAvailableToTC"]
+        }
+        if (x['for20Trainees']) {
+            minEquipReq["for20Trainees"] = x["for20Trainees"]
+        }
+        if (x['for25Trainees']) {
+            minEquipReq["for25Trainees"] = x["for25Trainees"]
+        }
+        if (x['for30Trainees']) {
+            minEquipReq["for30Trainees"] = x["for30Trainees"]
+        }
+        object["minEquipReq"] = minEquipReq
+        object["status"] = "Active"
+        object["updatedOn"] = new Date()
+        eqptDetails.push(object);
+    })
+    db.qps.updateMany({
+        "qpCode": y["qpCode"]
+    }, {
+        "$set": {
+            "eqptDetails": eqptDetails
+        }
+    })
+})
