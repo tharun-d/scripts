@@ -250,3 +250,26 @@ db.qps.find({
         }
     })
 })
+
+db.qps.find({}).forEach(x => {
+    if (x["eqptDetails"]) {
+        for (let index = 0; index < x["eqptDetails"].length; index++) {
+            if (x["eqptDetails"][index]["minEquipReq"] &&
+                x["eqptDetails"][index]["minEquipReq"]["for30Trainees"] &&
+                x["eqptDetails"][index]["minEquipReq"]["for30Trainees"] != "") {
+                x["eqptDetails"][index]["minQtyReq"] = x["eqptDetails"][index]["minEquipReq"]["for30Trainees"]
+            }
+        }
+    }
+    db.qps.save(x)
+})
+
+
+db.qps.updateMany(
+    {
+        "equipmentStatus": { "$in": ["Active", "Submitted"] }, "eqptDetails": { "$exists": true }
+    },
+    {
+        "$set":
+            { "equipmentStatus": "Active", "eqptDetails.$[].status": "Active" }
+    })

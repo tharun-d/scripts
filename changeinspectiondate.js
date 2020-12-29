@@ -1,23 +1,23 @@
-db.trainingcentre.find({ userName: "TC129466" }).forEach(x => {
+db.trainingcentre.find({ userName: "TC112865" }).forEach(x => {
     //inspectionCenterDates
     len = x["inspectionCenterDates"].length
     print("previous inspectionCenterDates: ", x["inspectionCenterDates"][len - 1]["proposeddate"])
-    x["inspectionCenterDates"][len - 1]["proposeddate"] = ISODate("2020-08-24T00:00:00Z")
+    x["inspectionCenterDates"][len - 1]["proposeddate"] = ISODate("2020-12-28T00:00:00Z")
     print("updated inspectionCenterDates: ", x["inspectionCenterDates"][len - 1]["proposeddate"])
 
     //inspectionDetails
     len = x["inspectionDetails"].length
     print("previous inspectionDetails: ", x["inspectionDetails"][len - 1]["inspectiondate"])
-    x["inspectionDetails"][len - 1]["inspectiondate"] = ISODate("2020-08-24T00:00:00Z")
+    x["inspectionDetails"][len - 1]["inspectiondate"] = ISODate("2020-12-28T00:00:00Z")
     print("updated inspectionDetails: ", x["inspectionDetails"][len - 1]["inspectiondate"])
     db.trainingcentre.save(x)
 })
 
-var mc = db.smartmessagecenter.findOne({ tcid: "TC129466" })
+var mc = db.smartmessagecenter.findOne({ tcid: "TC112865" })
 if (mc) {
 
     var stage = {
-        "stage": "Based on SR-5206 we have changed inspection date to 24th August 2020",
+        "stage": "Based on SR we have changed inspection date to 28th December 2020",
         "stageDate": new Date()
     }
     mc['stages'].push(stage)
@@ -25,29 +25,29 @@ if (mc) {
     db.smartmessagecenter.save(mc)
 }
 
-db.tcworkflow.update({ "_id": ObjectId("5f219a3a2ff79b04bc8b23a2"), "tcId": "TC129466" },
+db.tcworkflow.update({ "_id": ObjectId("5fe08012292f58052faf6612"), "tcId": "TC112865" },
     {
         "$set":
         {
-            "otherInformation.centreinspection.firstProposedDate": ISODate("2020-08-24T00:00:00Z"),
-            "otherInformation.centreinspection.proposeddate": ISODate("2020-08-24T00:00:00Z"),
+            "otherInformation.centreinspection.firstProposedDate": ISODate("2020-12-28T00:00:00Z"),
+            "otherInformation.centreinspection.proposeddate": ISODate("2020-12-28T00:00:00Z"),
         }
     })
 
-db.tcworkflow.update({ "_id": ObjectId("5f431de86e669f04b848a8bf"), "tcId": "TC129466" },
+db.tcworkflow.update({ "_id": ObjectId("5fe09f095ca12e0523889b9c"), "tcId": "TC112865" },
     {
         "$set":
         {
-            "otherInformation.centreinspection.firstProposedDate": ISODate("2020-08-24T00:00:00Z"),
-            "otherInformation.centreinspection.proposeddate": ISODate("2020-08-24T00:00:00Z"),
+            "otherInformation.centreinspection.firstProposedDate": ISODate("2020-12-28T00:00:00Z"),
+            "otherInformation.centreinspection.proposeddate": ISODate("2020-12-28T00:00:00Z"),
         }
     })
-db.tcworkflow.update({ "_id": ObjectId("5f431de86e669f04b848a8c0"), "tcId": "TC129466" },
+db.tcworkflow.update({ "_id": ObjectId("5fe09f095ca12e0523889b9d"), "tcId": "TC112865" },
     {
         "$set":
         {
-            "otherInformation.centreinspection.firstProposedDate": ISODate("2020-08-24T00:00:00Z"),
-            "otherInformation.centreinspection.proposeddate": ISODate("2020-08-24T00:00:00Z"),
+            "otherInformation.centreinspection.firstProposedDate": ISODate("2020-12-28T00:00:00Z"),
+            "otherInformation.centreinspection.proposeddate": ISODate("2020-12-28T00:00:00Z"),
         }
     })
 

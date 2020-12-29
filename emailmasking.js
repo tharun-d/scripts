@@ -31,9 +31,23 @@ db.trainingcentre.updateMany({ "spoc.mobileNumber": NumberLong("8884496815") }, 
 db.trainingcentre.updateMany({ "spoc.mobileNumber": { $exists: true }, "continuousMonitoringPayment": "success" }, { $set: { "spoc.mobileNumber": NumberLong("9490285247") } })
 db.trainingcentre.updateMany({ "spoc.email": { $exists: true }, "continuousMonitoringPayment": "success" }, { $set: { "spoc.email": "tharun.d@transneuron.com" } })
 
-db.trainingcentre.updateMany({ "userName": { "$in": ["TC109805", "TC100151"] } },
-    { $set: { "spoc.mobileNumber": NumberLong("9490285247"), "spoc.email": "mahesh.k@transneuron.com" } })
+db.trainingcentre.updateMany({ "userName": { "$in": ["TC100256", "TC100186", "TC100452"] } },
+    {
+        $set: {
+            "spoc.mobileNumber": NumberLong("7827286018"), "spoc.email": "govind.p@transneuron.com",
+        }
+    })
 
 
 db.trainingpartner.updateMany({ "userName": { "$in": ["TP000137", "TP004020"] } },
     { $set: { "spoc.mobileNumber": NumberLong("9490285247"), "spoc.email": "tharun.d@transneuron.com" } })
+
+
+db.trainingcentre.updateMany({ "spoc.mobileNumber": { "$exists": true } },
+    { $set: { "spoc.mobileNumber": NumberLong("111111") } })
+
+db.trainingcentre.updateMany({ "spoc.email": { "$exists": true } },
+    { $set: { "spoc.email": "mah.org" } })
+
+    db.users.updateMany({ email: "tharun.d@transneuron.com" }, { "$set": { "email": "abc@gmail.com", "phone.mobile": NumberLong("12334") } })
+    db.users.updateMany({ "phone.mobile": NumberLong("9490285247") }, { "$set": { "email": "abc@gmail.com", "phone.mobile": NumberLong("12334") } })

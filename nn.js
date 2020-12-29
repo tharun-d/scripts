@@ -76,3 +76,10 @@ db.trainingcentre.find({ "centerStaff": { "$exists": true } }, { "centerStaff": 
     }
 })
 print(count)
+
+db.tcregistrationrules.update({ status: "active", "rulesForType.type": "Reg" },
+    {
+        "$set": {
+            "rulesForType.$.continuousMonitoring.amount": 12000
+        }
+    })

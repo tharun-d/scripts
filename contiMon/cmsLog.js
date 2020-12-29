@@ -1,8 +1,22 @@
+
+db.trainingcentre.updateMany({ "userName": { "$in": ["TC100256", "TC100186", "TC100452"] } },
+	{
+		$set: {
+			"spoc.mobileNumber": NumberLong("7827286018"), "spoc.email": "govind.p@transneuron.com",
+		}
+	})
+
+db.cmStatusLog.remove({ "tcUserName": { "$in": ["TC100256", "TC100186", "TC100452"] } })
+db.tccontinuousmonitoring.remove({ "userName": { "$in": ["TC100256", "TC100186", "TC100452"] } })
+db.cmworkflow.remove({ "tcId": { "$in": ["TC100256", "TC100186", "TC100452"] } })
+
 db.cmStatusLog.remove({})
 db.cmStatusLog.find({})
+
+
 db.cmStatusLog.insert(
 	{
-		"tcUserName": "TC770049",
+		"tcUserName": "TC100256",
 		"year": 2020,
 		"dateCreated": new Date(),
 		"lastUpdated": new Date(),
@@ -55,7 +69,7 @@ db.cmStatusLog.insert(
 
 db.cmStatusLog.update(
 	{
-		"tcUserName": "TC770051",
+		"tcUserName": "TC770045",
 		"quarterNumber": 1,
 	},
 	{
