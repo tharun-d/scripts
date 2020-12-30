@@ -83,3 +83,31 @@ db.tcregistrationrules.update({ status: "active", "rulesForType.type": "Reg" },
             "rulesForType.$.continuousMonitoring.amount": 12000
         }
     })
+
+
+
+db.trainingcentre.update({ userName: "TC129546" },
+    { "$set": { "jobRoles.$[].status": "inspectionRequest", "inspectionProcess": "start", "tcstatus": "inspectionRequest" } })
+
+tcVal = db.trainingcentre.findOne({ userName: "TC129546" })
+var IAworkflow = {
+    "_id": new ObjectId(),
+    "tcId": "TC061896",
+    "status": "inspectionRequest",
+    "reqID": "Req1",
+    "zone": tcVal["address"]["zone"],
+    "state": tcVal["address"]["state"]["name"],
+    "addressLine": tcVal["address"]["addressLine"],
+    "district": tcVal["address"] && tcVal["address"]["district"] && tcVal["address"]["district"]["name"],
+    "createdOn": ISODate("2020-12-04T11:30:57.360Z"),
+    "actionTakenOn": ISODate("2020-12-04T11:30:57.360Z"),
+    "assignedNextUser": "PI0006",
+    "assignedNextUserRole": "Inspection Agency",
+    "spoc": tcVal["spoc"],
+    "trainingCentreName": tcVal["trainingCentreName"],
+    "trainingPartnerName": tcVal["trainingPartner"]["name"],
+    "trainingPartnerID": tcVal["trainingPartner"]["userName"],
+    "trainingCenterType": tcVal["trainingCenterType"],
+    "createdBy": "mongoscript",
+}
+db.tcworkflow.insert(IAworkflow)
