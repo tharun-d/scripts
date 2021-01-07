@@ -33,7 +33,7 @@ db.users.insert(
     {
         "email": "testingteam@transneuron.com",
         "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "userName": "TC115903",
+        "userName": "TC129546",
         "role": "Training Centre",
         "phone": {
             "mobile": NumberLong(9986223869)

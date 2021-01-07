@@ -384,9 +384,52 @@ var IAworkflow = {
 }
 db.tcworkflow.insert(IAworkflow)
 
-db.trainingcentre.update({ userName: "TC013872" }, {
+db.trainingcentre.update({ userName: "TC102585" }, {
     $set: {
-        "continuousMonitoringPayment": "",
-        "status": "DEACCREDIATED"
+        "status": "DEACCREDIATED",
+        "jobRoles.$[].sscStatus": "deaccrediated",
+    }
+})
+
+db.trainingcentre.update({ userName: "TC101231", "jobRoles.qp": "AMH/Q1947" }, {
+    $set: {
+        "jobRoles.$.sscStatus": "deaccrediated",
+    }
+})
+db.trainingcentre.update({ userName: "TC035245", "jobRoles.qp": "AMH/Q1947" }, {
+    $set: {
+        "jobRoles.$.sscStatus": "Accrediated",
+    }
+})
+db.trainingcentre.update({ userName: "TC035245", "jobRoles.qp": "TEL/Q2101" }, {
+    $set: {
+        "jobRoles.$.sscStatus": "Conditionally Accrediated",
+    }
+})
+
+//TC059476
+TC060278
+TC060281
+
+db.trainingcentre.find({ userName: "TC100610", }, {
+    "_id": 0, "jobRoles.qp": 1, "jobRoles.sscStatus": 1, "jobRoles.accrediatedOn": 1, "jobRoles.expiryOn": 1, "jobRoles.affiliationDone": 1
+}).pretty()
+
+
+db.trainingcentre.find({
+    "userName": /TC1/, "jobRoles": { "$exists": true }, status: "Qualified",
+    "$and": [{ "jobRoles.sscStatus": "Conditionally Accrediated" }, { "jobRoles.affiliationDone": true }]
+}).sort({ "_id": -1 }).forEach(tcDetails => {
+    hello = true
+    count = 0
+    tcDetails.jobRoles.forEach(jobRoleValue => {
+        if (jobRoleValue["sscStatus"] == "Conditionally Accrediated") {
+            count = count + 1
+        } else {
+            hello = false
+        }
+    })
+    if (count > 2 && hello) {
+        print(tcDetails["userName"])
     }
 })

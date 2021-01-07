@@ -663,11 +663,23 @@ db.trainingcentre.update({ userName: "TC132894" },
     { "$set": { "jobRoles.1.status": "Conditionally Accrediated", "jobRoles.1.sscStatus": "Conditionally Accrediated" } })
 
 
-db.smartmessagecenter.update({ "tcid": "TC132894" }, { "$pop": { "messages": 1 } })
+db.smartmessagecenter.update({ "tcid": "TC061896" }, { "$pop": { "messages": 1 } })
 
 stages = {
-    "stage": "SSC has marked the Job Role Stitching Operator as Conditionally Accredited. Please pay Continuous Monitoring Fees and Affiliation Fees.",
-    "stageDate": ISODate("2020-10-14T05:42:43.012Z")
+    "stage": "Inspection Planning Under Progress",
+    "stageDate": ISODate("2020-12-04T11:30:57.360Z"),
 }
 
-db.smartmessagecenter.update({ "tcid": "TC132894" }, { "$push": { "stages": stages } })
+db.smartmessagecenter.update({ "tcid": "TC061896" }, { "$push": { "stages": stages } })
+
+
+
+db.tcworkflow.find({ status: "DAASSIGNED", assignedNextUserRole: "Inspection Agency" }).forEach(x => {
+    data = db.tcworkflow.find({ tcId: x["tcId"], assignedNextUserRole: "Desktop Assessor" }).sort({ "_id": -1 }).limit(1).toArray()
+    if (data[0]["status"] != "DAASSIGNED") {
+        print(x["tcId"])
+        x["status"] = data[0]["status"]
+        x["actionTakenOn"] = data[0]["actionTakenOn"]
+        db.tcworkflow.save(x)
+    }
+})
