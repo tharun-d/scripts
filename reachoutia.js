@@ -83,3 +83,9 @@ db.tcworkflow.find({ status: "Reach out IA", "jobRole.qp": { "$exists": true }, 
 print(count)
 
 db.tcworkflow.remove({ "_id": ObjectId("5e7b4ffcd38b750337f0d610") })
+
+
+db.tcworkflow.update({ userName: "TC124861", status: "askingDetailsFromIA" },
+    { "$set": { "assignedTo": "PI0006" } })
+db.tcworkflow.update({ userName: "TC124023", status: "askingDetailsFromIA" },
+    { "$set": { "assignedTo": "PI0006" } })

@@ -16,8 +16,8 @@ db.cmStatusLog.find({})
 
 db.cmStatusLog.insert(
 	{
-		"tcUserName": "TC100256",
-		"year": 2020,
+		"tcUserName": "TC109804",
+		"year": 2021,
 		"dateCreated": new Date(),
 		"lastUpdated": new Date(),
 		"quarterNumber": 1,
@@ -69,12 +69,12 @@ db.cmStatusLog.insert(
 
 db.cmStatusLog.update(
 	{
-		"tcUserName": "TC770045",
-		"quarterNumber": 1,
+		"tcUserName": "TC109804",
+		"quarterNumber": 2,
 	},
 	{
 		$set: {
-			"notificationDate": new Date(),
+			"notificationTime": ISODate("2020-08-19T00:00:00Z"),
 		}
 	}
 )

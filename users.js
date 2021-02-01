@@ -64,14 +64,14 @@ db.users.update({ userName: "KARTIKEY.QACA" }, {
     }
 })
 
-db.users.remove({ userName: "DA_000009" })
+db.users.remove({ userName: "DA_000007" })
 
 db.users.find({ "phone.mobile": { "$exists": true } })
 db.users.insert(
     {
         "email": "testingteam@transneuron.com",
         "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "userName": "GAURAV_QACA_DA",
+        "userName": "DA_000007",
         "role": "Desktop Assessor",
         "phone": {
             "mobile": NumberLong(9986223869)

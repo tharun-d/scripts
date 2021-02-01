@@ -49,5 +49,5 @@ db.trainingcentre.updateMany({ "spoc.mobileNumber": { "$exists": true } },
 db.trainingcentre.updateMany({ "spoc.email": { "$exists": true } },
     { $set: { "spoc.email": "mah.org" } })
 
-    db.users.updateMany({ email: "tharun.d@transneuron.com" }, { "$set": { "email": "abc@gmail.com", "phone.mobile": NumberLong("12334") } })
-    db.users.updateMany({ "phone.mobile": NumberLong("9490285247") }, { "$set": { "email": "abc@gmail.com", "phone.mobile": NumberLong("12334") } })
+db.users.updateMany({ email: "pooja.p@transneuron.com" }, { "$set": { "email": "abc@gmail.com", "phone.mobile": NumberLong("12334") } })
+db.users.updateMany({ "phone.mobile": NumberLong("9490285247") }, { "$set": { "email": "abc@gmail.com", "phone.mobile": NumberLong("12334") } })

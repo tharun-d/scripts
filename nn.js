@@ -102,3 +102,60 @@ db.tcworkflow.find({ status: "DAASSIGNED", assignedNextUserRole: "Inspection Age
 
 
 
+
+db.cmStatusLog.updateMany({ "notificationSent": true }, { "$set": { "marksAwarded": true } })
+db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "continuousMonitoringPayment": "success" }).limit(50).forEach(data => {
+    paymentsData = db.payments.find({
+        userId: data["userName"], "requestMetadata.subscriptionDetails.referenceType": "Continuous Monitoring Fee", "isComplete": true,
+        "responseMetadata.date": { "$exists": true },
+    }).sort({ "_id": -1 }).limit(1).toArray()
+
+    count = db.cmStatusLog.find({ "tcUserName": data["userName"] }).count()
+    if (count == 0) {
+        cmStatusLog = {}
+        cmStatusLog["_id"] = new ObjectId()
+
+        cmStatusLog["tcUserName"] = data["userName"]
+        cmStatusLog["tpUserName"] = data["trainingPartner"]["userName"]
+        cmStatusLog["year"] = 2020
+        cmStatusLog["quarterNumber"] = 1
+        if (paymentsData.length > 0) {
+            cmStatusLog["paymentDate"] = paymentsData[0]["date"]
+        }
+        var notificationDate = new Date(paymentsData[0]["date"].getTime() + (90 * 24 * 60 * 60 * 1000))
+        //cmStatusLog["notificationDate"] = ISODate("2020-07-23T00:00:00.000Z")
+        cmStatusLog["notificationDate"] = notificationDate
+        var quarterEndDate = new Date(cmStatusLog["notificationDate"].getTime() + (90 * 24 * 60 * 60 * 1000))
+        cmStatusLog["dateCreated"] = new Date()
+        cmStatusLog["quarterEndDate"] = quarterEndDate
+        cmStatusLog["notificationSent"] = false
+        cmStatusLog["marksAwarded"] = false
+        cmStatusLog["skippedThisQuarter"] = false
+        cmStatusLog["tcCompleted"] = false
+
+        db.cmStatusLog.insert(cmStatusLog)
+    } else {
+        cmStatusLog = {}
+        cmStatusLog["_id"] = new ObjectId()
+
+        cmStatusLog["tcUserName"] = data["userName"]
+        cmStatusLog["tpUserName"] = data["trainingPartner"]["userName"]
+        cmStatusLog["year"] = 2020
+        cmStatusLog["quarterNumber"] = 2
+        if (paymentsData.length > 0) {
+            cmStatusLog["paymentDate"] = paymentsData[0]["date"]
+        }
+        //cmStatusLog["notificationDate"] = ISODate("2020-07-23T00:00:00.000Z")
+        cmStatusLog["notificationDate"] = new Date()
+        var quarterEndDate = new Date(cmStatusLog["notificationDate"].getTime() + (90 * 24 * 60 * 60 * 1000))
+        cmStatusLog["quarterEndDate"] = quarterEndDate
+        cmStatusLog["notificationSent"] = false
+        cmStatusLog["marksAwarded"] = false
+        cmStatusLog["skippedThisQuarter"] = false
+        cmStatusLog["tcCompleted"] = false
+
+        db.cmStatusLog.insert(cmStatusLog)
+    }
+
+
+})

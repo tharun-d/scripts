@@ -1,6 +1,6 @@
-db.trainingcentre.find({ "userName": "TC122069" }).forEach(tcVal => {
+db.trainingcentre.find({ "userName": "TC007462" }).forEach(tcVal => {
     tcVal.jobRoles.forEach(jrVal => {
-        if (jrVal.qp == "AMH/Q1947") {
+        if (jrVal.qp == "TEL/Q0100") {
             var qpsvalue = db.qps.findOne({ qpCode: jrVal["qp"] }, { "sectors": 1 })
             var findQueryssc = {}
             findQueryssc["sector.id"] = parseInt(qpsvalue["sectors"]["sectorID"])
@@ -41,7 +41,7 @@ db.trainingcentre.find({ "userName": "TC122069" }).forEach(tcVal => {
     })
 })
 
-db.trainingcentre.update({ userName: "TC122069", "jobRoles.qp": "AMH/Q1947" }, {
+db.trainingcentre.update({ userName: "TC007462", "jobRoles.qp": "TEL/Q0100" }, {
     "$set": {
         "jobRoles.$.status": "QC Conditionally Recommended",
         "jobRoles.$.qcStatus": "QC Conditionally Recommended",
@@ -49,11 +49,11 @@ db.trainingcentre.update({ userName: "TC122069", "jobRoles.qp": "AMH/Q1947" }, {
 })
 
 
-var mc = db.smartmessagecenter.findOne({ tcid: "TC122069" })
+var mc = db.smartmessagecenter.findOne({ tcid: "TC007462" })
 if (mc) {
 
     var stage = {
-        "stage": "Job role AMH/Q1947 status has been changed from not Recommended to conditionally recommended based on SR6405",
+        "stage": "Job role TEL/Q0100 status has been changed from not Recommended to conditionally recommended based on SR8863",
         "stageDate": new Date()
     }
     mc['stages'].push(stage)
