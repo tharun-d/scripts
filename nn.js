@@ -102,28 +102,27 @@ db.tcworkflow.find({ status: "DAASSIGNED", assignedNextUserRole: "Inspection Age
 
 
 
-
+db.cmStatusLog.remove({ "insertedManually": true })
 db.cmStatusLog.updateMany({ "notificationSent": true }, { "$set": { "marksAwarded": true } })
 db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "continuousMonitoringPayment": "success" }).limit(50).forEach(data => {
     paymentsData = db.payments.find({
         userId: data["userName"], "requestMetadata.subscriptionDetails.referenceType": "Continuous Monitoring Fee", "isComplete": true,
-        "responseMetadata.date": { "$exists": true },
+        "responseMetadata.trans_date": { "$exists": true },
     }).sort({ "_id": -1 }).limit(1).toArray()
-
     count = db.cmStatusLog.find({ "tcUserName": data["userName"] }).count()
     if (count == 0) {
         cmStatusLog = {}
         cmStatusLog["_id"] = new ObjectId()
-
+        cmStatusLog["insertedManually"] = true
         cmStatusLog["tcUserName"] = data["userName"]
         cmStatusLog["tpUserName"] = data["trainingPartner"]["userName"]
         cmStatusLog["year"] = 2020
         cmStatusLog["quarterNumber"] = 1
-        if (paymentsData.length > 0) {
-            cmStatusLog["paymentDate"] = paymentsData[0]["date"]
+        print(paymentsData.length)
+        if (paymentsData && paymentsData.length > 0 && paymentsData[0] && paymentsData[0]["responseMetadata"]["trans_date"]) {
+            cmStatusLog["paymentDate"] = paymentsData[0]["responseMetadata"]["trans_date"]
         }
-        var notificationDate = new Date(paymentsData[0]["date"].getTime() + (90 * 24 * 60 * 60 * 1000))
-        //cmStatusLog["notificationDate"] = ISODate("2020-07-23T00:00:00.000Z")
+        var notificationDate = new Date(paymentsData[0]["responseMetadata"]["trans_date"].getTime() + (90 * 24 * 60 * 60 * 1000))
         cmStatusLog["notificationDate"] = notificationDate
         var quarterEndDate = new Date(cmStatusLog["notificationDate"].getTime() + (90 * 24 * 60 * 60 * 1000))
         cmStatusLog["dateCreated"] = new Date()
@@ -132,20 +131,19 @@ db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "continuo
         cmStatusLog["marksAwarded"] = false
         cmStatusLog["skippedThisQuarter"] = false
         cmStatusLog["tcCompleted"] = false
-
         db.cmStatusLog.insert(cmStatusLog)
     } else {
         cmStatusLog = {}
         cmStatusLog["_id"] = new ObjectId()
-
+        cmStatusLog["insertedManually"] = true
         cmStatusLog["tcUserName"] = data["userName"]
         cmStatusLog["tpUserName"] = data["trainingPartner"]["userName"]
         cmStatusLog["year"] = 2020
         cmStatusLog["quarterNumber"] = 2
-        if (paymentsData.length > 0) {
-            cmStatusLog["paymentDate"] = paymentsData[0]["date"]
+        if (paymentsData && paymentsData.length > 0 && paymentsData[0] && paymentsData[0]["responseMetadata"]["trans_date"]) {
+            cmStatusLog["paymentDate"] = paymentsData[0]["responseMetadata"]["trans_date"]
         }
-        //cmStatusLog["notificationDate"] = ISODate("2020-07-23T00:00:00.000Z")
+        cmStatusLog["dateCreated"] = new Date()
         cmStatusLog["notificationDate"] = new Date()
         var quarterEndDate = new Date(cmStatusLog["notificationDate"].getTime() + (90 * 24 * 60 * 60 * 1000))
         cmStatusLog["quarterEndDate"] = quarterEndDate
@@ -153,9 +151,6 @@ db.trainingcentre.find({ "processType": "Accreditation & Affiliation", "continuo
         cmStatusLog["marksAwarded"] = false
         cmStatusLog["skippedThisQuarter"] = false
         cmStatusLog["tcCompleted"] = false
-
         db.cmStatusLog.insert(cmStatusLog)
     }
-
-
 })

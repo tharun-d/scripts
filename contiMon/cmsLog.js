@@ -7,16 +7,17 @@ db.trainingcentre.updateMany({ "userName": { "$in": ["TC100256", "TC100186", "TC
 	})
 
 db.cmStatusLog.remove({ "tcUserName": { "$in": ["TC100256", "TC100186", "TC100452"] } })
-db.tccontinuousmonitoring.remove({ "userName": { "$in": ["TC100256", "TC100186", "TC100452"] } })
-db.cmworkflow.remove({ "tcId": { "$in": ["TC100256", "TC100186", "TC100452"] } })
+db.tccontinuousmonitoring.remove({ "userName": { "$in": ["TC122921", "TC100186", "TC100452"] } })
+db.cmworkflow.remove({ "tcId": { "$in": ["TC122921", "TC100186", "TC100452"] } })
 
 db.cmStatusLog.remove({})
 db.cmStatusLog.find({})
 
-
+db.tccontinuousmonitoring.remove({ "userName": { "$in": ["TC122921", "TC100186", "TC100452"] } })
+db.cmworkflow.remove({ "tcId": { "$in": ["TC122921", "TC100186", "TC100452"] } })
 db.cmStatusLog.insert(
 	{
-		"tcUserName": "TC109804",
+		"tcUserName": "TC122921",
 		"year": 2021,
 		"dateCreated": new Date(),
 		"lastUpdated": new Date(),
