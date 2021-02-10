@@ -108,3 +108,9 @@ if (mc) {
 }
 
 db.trainingcentre.update({ "userName": "TC042707" }, { "$unset": { "jobRoles.$[].praposalcode": "" } })
+
+db.trainingcentre.update({ userName: "TC007462" },
+    {
+        "$set":
+            { "inspectionDetails.2.jobroles": ["JOBROLE_6", "JOBROLE_5"], "remainingPaymentRequired": true }
+    })

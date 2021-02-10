@@ -683,3 +683,50 @@ db.tcworkflow.find({ status: "DAASSIGNED", assignedNextUserRole: "Inspection Age
         db.tcworkflow.save(x)
     }
 })
+
+
+
+
+a = db.cmStatusLog.distinct("tcUserName", { quarterNumber: 2 })
+a.forEach(x => {
+    count = db.cmStatusLog.find({ "tcUserName": x, quarterNumber: 2 }).count()
+    if (count == 2) {
+        co = 0
+        db.cmStatusLog.find({ "tcUserName": x, quarterNumber: 2 }).forEach(y => {
+            co = co + 1
+            if (co == 2) {
+                db.cmStatusLog.remove({ "_id": y["_id"] })
+            }
+        })
+    }
+})
+
+
+
+a = db.tccontinuousmonitoring.distinct("userName", { quarterNumber: 2 })
+a.forEach(x => {
+    count = db.tccontinuousmonitoring.find({ "userName": x, quarterNumber: 2 }).count()
+    if (count == 2) {
+        co = 0
+        db.tccontinuousmonitoring.find({ "userName": x, quarterNumber: 2 }).forEach(y => {
+            co = co + 1
+            if (co == 2) {
+                db.tccontinuousmonitoring.remove({ "_id": y["_id"] })
+            }
+
+        })
+    }
+})
+
+
+db.smartmessagecenter.find({ "stages": { "$exists": true } }).forEach(x => {
+    for (let index = 0; index < x["stages"].length; index++) {
+        str = x["stages"][index]["stage"]
+        if (str && str.startsWith("Since you have not responded")) {
+            x["stages"].splice(index, 1)
+            db.smartmessagecenter.update({ "tcid": x.tcid }, { $set: { stages: x["stages"] } })
+            break
+        }
+    }
+})
+

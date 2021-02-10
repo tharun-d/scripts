@@ -36,3 +36,4 @@ db.users.insert(
         "createdOn": new Date(),
         "loginAttempts": 0
     }
+)
