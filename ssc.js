@@ -1,6 +1,6 @@
-db.trainingcentre.find({ "userName": "TC007462" }).forEach(tcVal => {
+db.trainingcentre.find({ "userName": "TC122526" }).forEach(tcVal => {
     tcVal.jobRoles.forEach(jrVal => {
-        if (jrVal.qp == "TEL/Q0100") {
+        if (jrVal.qp == "SGJ/Q0101") {
             var qpsvalue = db.qps.findOne({ qpCode: jrVal["qp"] }, { "sectors": 1 })
             var findQueryssc = {}
             findQueryssc["sector.id"] = parseInt(qpsvalue["sectors"]["sectorID"])
@@ -113,4 +113,17 @@ db.trainingcentre.update({ userName: "TC007462" },
     {
         "$set":
             { "inspectionDetails.2.jobroles": ["JOBROLE_6", "JOBROLE_5"], "remainingPaymentRequired": true }
+    })
+
+db.allowduplicatepan.find({}).forEach(data => {
+    db.trainingpartner.updateMany({ tpId: { "$in": data["tpId"] } }, { "$set": {"financial.pan": data["panCard"]}})
+})  
+
+db.tcworkflow.update({ "_id": ObjectId("5e82e07826366704c6121720"), "tcId": "TC127491" },
+    {
+        "$set":
+        {
+            "otherInformation.centreinspection.firstProposedDate": ISODate("2021-02-24T00:00:00Z"),
+            "otherInformation.centreinspection.proposeddate": ISODate("2021-02-24T00:00:00Z"),
+        }
     })

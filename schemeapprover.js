@@ -1,13 +1,13 @@
 db.schemeapprover.insert(
     {
-        "userName": "CSR00001",
-        "email": "twinkle.sehgal@nsdcindia.org",
-        "firstName": "Twinkle Sehgal",
+        "userName": "SEK00001",
+        "email": "sak.nsdc@nsdcindia.org",
+        "firstName": "Irshad Yatoo",
         "status": "Active",
-        "schemeId": 28,
+        "schemeId": 31,
         "role": "Scheme Approver",
         "phone": {
-            "mobile": NumberLong("8744949649")
+            "mobile": NumberLong("9654870928")
         },
         "createdOn": new Date()
     }
@@ -16,22 +16,22 @@ db.schemeapprover.insert(
 /////
 
 db.smartschemes.insert({
-    "schemeId": 28,
-    "schemeName": "NSDC CSR",
-    "recommendedBy": "NSDC CSR Team"
+    "schemeId": 31,
+    "schemeName": "Seekho Aur Kamao (Learn & Earn)” Scheme for J&K and Ladakh",
+    "recommendedBy": "National Skill Development Corporation (NSDC)"
 })
 
 ///
 
 db.users.insert(
     {
-        "firstName": "Mr. Avnish Jain",
-        "userName": "CSR00001",
-        "email": "twinkle.sehgal@nsdcindia.org",
+        "firstName": "Irshad Yatoo",
+        "userName": "SEK00001",
+        "email": "sak.nsdc@nsdcindia.org",
         "role": "Scheme Approver",
         "password": "$2a$10$KRvuR8GFlMX.v8gScfwDkuo6wOwaW/ah1DH9DJ3Ky5R5oa3AQrxvm",
         "phone": {
-            "mobile": NumberLong("8744949649")
+            "mobile": NumberLong("9654870928")
         },
         "createdOn": new Date(),
         "loginAttempts": 0

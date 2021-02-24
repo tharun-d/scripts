@@ -10,9 +10,9 @@ db.trainingcentre.update({ userName: "TC111139" },
 db.trainingcentre.find({ userName: "TC111139" },
     { "residentialFacilities": 1 }).pretty()
 
-db.trainingcentre.find({ userName: "TC112480" },
+db.trainingcentre.find({ userName: "TC111753" },
     {
-        "residentialFacilities.daReviews": 1,
+        "residentialFacilities.inspectionProcess": 1,
         "residentialFacilities.status": 1,
         "residentialFacilities.residentialStatus": 1,
         "residentialFacilities.residentialStatus": 1,
