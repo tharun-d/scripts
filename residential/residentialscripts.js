@@ -10,7 +10,7 @@ db.trainingcentre.update({ userName: "TC111139" },
 db.trainingcentre.find({ userName: "TC111139" },
     { "residentialFacilities": 1 }).pretty()
 
-db.trainingcentre.find({ userName: "TC111753" },
+db.trainingcentre.find({ userName: "TC133145" },
     {
         "residentialFacilities.inspectionProcess": 1,
         "residentialFacilities.status": 1,

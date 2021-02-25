@@ -1,4 +1,3 @@
-
 db.tcregistrationrules.remove({ status: "active" })
 db.tcregistrationrules.insert(
     {

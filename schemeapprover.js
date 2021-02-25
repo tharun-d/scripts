@@ -17,7 +17,7 @@ db.schemeapprover.insert(
 
 db.smartschemes.insert({
     "schemeId": 31,
-    "schemeName": "Seekho Aur Kamao (Learn & Earn)” Scheme for J&K and Ladakh",
+    "schemeName": "Seekho Aur Kamao (Learn & Earn) Scheme for J&K and Ladakh",
     "recommendedBy": "National Skill Development Corporation (NSDC)"
 })
 

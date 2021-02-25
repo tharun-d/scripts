@@ -116,8 +116,8 @@ db.trainingcentre.update({ userName: "TC007462" },
     })
 
 db.allowduplicatepan.find({}).forEach(data => {
-    db.trainingpartner.updateMany({ tpId: { "$in": data["tpId"] } }, { "$set": {"financial.pan": data["panCard"]}})
-})  
+    db.trainingpartner.updateMany({ tpId: { "$in": data["tpId"] } }, { "$set": { "financial.pan": data["panCard"] } })
+})
 
 db.tcworkflow.update({ "_id": ObjectId("5e82e07826366704c6121720"), "tcId": "TC127491" },
     {
@@ -127,3 +127,14 @@ db.tcworkflow.update({ "_id": ObjectId("5e82e07826366704c6121720"), "tcId": "TC1
             "otherInformation.centreinspection.proposeddate": ISODate("2021-02-24T00:00:00Z"),
         }
     })
+
+
+db.trainingcentre.find({ userName: "TC138858" }).forEach(x => {
+    //inspectionCenterDates
+    len = x["inspectionCenterDates"].length
+    print("previous inspectionCenterDates: ", x["inspectionCenterDates"][len - 1]["proposeddate"])
+    x["inspectionCenterDates"][len - 1]["proposeddate"] =  ISODate("2021-02-24T00:00:00Z")
+    print("updated inspectionCenterDates: ", x["inspectionCenterDates"][len - 1]["proposeddate"])
+
+    db.trainingcentre.save(x)
+})
