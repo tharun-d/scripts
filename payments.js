@@ -56,6 +56,8 @@ db.payments.find({
 })
 
 db.payments.find({ userId: "TC101176", "requestMetadata.subscriptionDetails.referenceType": { "$in": ["Inspection Fee", "Re-Inspection Fee"] }, "isComplete": true })
+//Re-Accreditation RE DA Fee
+db.payments.find({ "requestMetadata.subscriptionDetails.referenceType": { "$in": ["Re-Accreditation RE DA Fee"] }, "isComplete": true })
 
 
 db.payments.find({

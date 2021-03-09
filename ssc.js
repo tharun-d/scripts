@@ -1,6 +1,6 @@
-db.trainingcentre.find({ "userName": "TC122526" }).forEach(tcVal => {
+db.trainingcentre.find({ "userName": "TC138267" }).forEach(tcVal => {
     tcVal.jobRoles.forEach(jrVal => {
-        if (jrVal.qp == "SGJ/Q0101") {
+        if (jrVal.qp == "RAS/Q0103") {
             var qpsvalue = db.qps.findOne({ qpCode: jrVal["qp"] }, { "sectors": 1 })
             var findQueryssc = {}
             findQueryssc["sector.id"] = parseInt(qpsvalue["sectors"]["sectorID"])

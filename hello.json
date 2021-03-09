@@ -1,0 +1,27 @@
+locationChangeData :[
+    {
+        "tcReviewComment": "",
+        "tcReviewDocument": "",
+        "tpStatus": "",
+        "tpReviewComment": "",
+        "tpReviewDocument": "",
+        "newAddressDetails": {
+            "addressLine": "",
+            "landmark": "",
+            "pincode": "",
+            "parliamentaryConstituency": {
+                "name": "",
+                "id": 10
+            }
+        },
+        "jobRoleDetails": [
+            {
+                "qp": "", // this is qpcode of job role
+                "jobRoleStatus": "", //either Continue or Delete
+                "schemeStatus": "", //Yes or No
+                "jobRoleStatusBySchemeApprover": "",
+                "schemeStatusBySchemeApprover": "",
+            }
+        ]
+    }
+]
