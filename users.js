@@ -29,11 +29,12 @@ db.users.insert(
 )
 
 //TC
+db.users.remove({userName:"TC059558"})
 db.users.insert(
     {
         "email": "testingteam@transneuron.com",
         "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "userName": "TC129546",
+        "userName": "TC059558",
         "role": "Training Centre",
         "phone": {
             "mobile": NumberLong(9986223869)

@@ -546,3 +546,58 @@ db.getCollection('temptpreda').find({}).forEach(x => {
     }
 })
 print(count)
+
+print("removing duplicates of Placement")
+db.trainingcentre.find({
+    centreArea: { "$exists": true, "$not": { "$size": 0 } },
+}).forEach(data => {
+    alreadyFound = false
+    centreAreaOrder = []
+    for (let index = 0; index < data["centreArea"].length; index++) {
+        if (data["centreArea"][index]["type"] =='Placement & Entrepreneurship Cell'){
+            if (!alreadyFound) {
+                alreadyFound = true
+                centreAreaOrder.push(data["centreArea"][index])
+            } 
+        } else {
+            centreAreaOrder.push(data["centreArea"][index])
+        }
+    }
+    db.trainingcentre.update({"userName":data["userName"]},{"$set":{centreArea:centreAreaOrder}})
+})
+
+print("removing duplicates of Reception")
+db.trainingcentre.find({
+    centreArea: { "$exists": true, "$not": { "$size": 0 } },
+}).forEach(data => {
+    alreadyFound = false
+    centreAreaOrder = []
+    for (let index = 0; index < data["centreArea"].length; index++) {
+       printjson(data["centreArea"][index])
+    }
+    //db.trainingcentre.update({"userName":data["userName"]},{"$set":{centreArea:centreAreaOrder}})
+})
+
+print("generate new serial number in centrearea")
+db.trainingcentre.find({
+    centreArea: { "$exists": true, "$not": { "$size": 0 } },
+}).forEach(data => {
+    
+    for (let index = 0; index < data["centreArea"].length; index++) {
+       data["centreArea"][index]["serialNumber"] = UUID().hex().toString()
+    }
+    db.trainingcentre.save(data)
+    
+})
+
+print("generate new serial number in centerstaff")
+db.trainingcentre.find({
+    centerStaff: { "$exists": true, "$not": { "$size": 0 } },
+}).forEach(data => {
+    
+    for (let index = 0; index < data["centerStaff"].length; index++) {
+       data["centerStaff"][index]["serialNumber"] = UUID().hex().toString()
+    }
+    db.trainingcentre.save(data)
+    
+})
