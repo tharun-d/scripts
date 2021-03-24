@@ -1,8 +1,8 @@
 Preview
 
-https://sdmsservices.nsdcindia.org/api/v1/pdf/inspection?userName=TC007462&role=inspectionreport&type=dev
+https://sdmsservices.nsdcindia.org/api/v1/pdf/inspection?userName=TC137777&role=inspectionreport&type=dev
 
 Regen
-https://sdmsservices.nsdcindia.org/api/v1/pdf/inspection?userName=TCXXXXXX&role=regen
+https://sdmsservices.nsdcindia.org/api/v1/pdf/inspection?userName=TC137777&role=regen
 
 

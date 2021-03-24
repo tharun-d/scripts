@@ -541,11 +541,11 @@ db.notices.insertMany(
         }
     ]
 )
-db.notices.remove({})
+db.notices.remove({"heading": "Notice for Re-activation of Refund due to change in Centre Accreditation and Affiliation guideline"})
 db.notices.insert(
     {
-        "heading": "Extension in validity of Conditionally Accredited and Accredited training centres on Skill India Portal",
-        "link": "https://nsdcpublicdocuments.s3.ap-south-1.amazonaws.com/smartnotices/Notice_on_Conditional_Accreditation_and_Accreditation_of_TCs_on_SIP_till_31stDecember2020.pdf",
+        "heading": "Notice for Re-activation of Refund due to change in Centre Accreditation and Affiliation guideline",
+        "link": "https://nsdcpublicdocuments.s3.ap-south-1.amazonaws.com/sdmssmartnotices/Re-activation_of_Refund_due_to_change_in_Centre_Accreditation_Affiliation.pdf",
         "createdOn": new Date(),
         "status": "active"
     }
