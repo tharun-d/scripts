@@ -6,15 +6,15 @@ db.trainingcentre.updateMany({ "userName": { "$in": ["TC100256", "TC100186", "TC
 		}
 	})
 
-db.cmStatusLog.remove({ "tcUserName": { "$in": ["TC100256", "TC100186", "TC100452"] } })
+db.cmStatusLog.remove({ "tcUserName": { "$nin": ["TC106935"] } })
 db.tccontinuousmonitoring.remove({ "userName": { "$in": ["TC122921", "TC100186", "TC100452"] } })
 db.cmworkflow.remove({ "tcId": { "$in": ["TC122921", "TC100186", "TC100452"] } })
 
 db.cmStatusLog.remove({})
 db.cmStatusLog.find({})
 
-db.tccontinuousmonitoring.remove({ "userName": { "$in": ["TC122921", "TC100186", "TC100452"] } })
-db.cmworkflow.remove({ "tcId": { "$in": ["TC122921", "TC100186", "TC100452"] } })
+db.tccontinuousmonitoring.remove({ "userName": { "$nin": ["TC106935"] } })
+db.cmworkflow.remove({ "tcId": { "$nin": ["TC106935"] } })
 db.cmStatusLog.insert(
 	{
 		"tcUserName": "TC122921",
@@ -70,12 +70,12 @@ db.cmStatusLog.insert(
 
 db.cmStatusLog.update(
 	{
-		"tcUserName": "TC109804",
-		"quarterNumber": 2,
+		"tcUserName": "TC106935",
+		"quarterNumber": 1,
 	},
 	{
 		$set: {
-			"notificationTime": ISODate("2020-08-19T00:00:00Z"),
+			"notificationDate": ISODate("2021-03-30T00:00:00Z"),
 		}
 	}
 )

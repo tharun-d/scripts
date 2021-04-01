@@ -130,3 +130,114 @@ db.trainingcentre.update({ userName: "TC101073", "jobRoles.qp": "TEL/Q0100" }, {
         "jobRoles.$.accrediatedOn": ISODate("2019-08-18T16:14:21.653Z")
     }
 })
+
+db.trainingcentre.aggregate([
+    {
+        "$match":
+        {
+            "jobRoles.sector.sectorID": "12",
+        }
+    },
+
+])
+
+db.trainingcentre.aggregate([
+    {
+        "$match": { "jobRoles.sector.sectorID": "12" },
+    },
+    {
+        "$unwind": "$jobRoles",
+    },
+    {
+        "$match": { "jobRoles.sector.sectorID": "12" },
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "userName": 1,
+            "jobRoleName": "$jobRoles.name",
+            "qp": "$jobRoles.qp",
+            "status": "$jobRoles.status",
+            "qcStatus": "$jobRoles.qcStatus",
+
+            "schemeID": "$jobRoles.scheme.schemeId",
+            "schemeStatus": "$jobRoles.schemeApprover.status",
+            "schemeActionTakenOn": "$jobRoles.schemeApprover.actionTakenOn",
+            "sscStatus": "$jobRoles.sscStatus",
+            "accrediatedOn": "$jobRoles.accrediatedOn",
+            "affiliationDone": "$jobRoles.affiliationDone",
+            "affiliatedOn": "$jobRoles.affiliatedOn",
+        }
+    },
+    { "$sort": { "_id": -1 } },
+    {
+        "$skip": 0
+    },
+    {
+        "$limit": 10
+    },
+]).pretty()
+
+
+db.tcworkflow.find({ status: { "$in": ["New Request", "reRequest"] }, assignedNextUserRole: "SSC", "jobRole.sectorId": "40" }).forEach(x => {
+
+    tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
+    print(tcData["userName"])
+    x["assignedNextUserRole"] == "Inspection Agency"
+    if (tcData["address"]["zone"] == "IMAC") {
+        x["assignedNextUser"] == "PI0006"
+    } else {
+        x["assignedNextUser"] == "PQ0001"
+    }
+    db.tcworkflow.save(x)
+})
+
+db.tcworkflow.find({ status: { "$in": ["TCREJECTEDIASCHEDULE"] }, assignedNextUserRole: "SSC" }).forEach(x => {
+
+    tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
+    print(tcData["userName"])
+    x["assignedNextUserRole"] == "Inspection Agency"
+    if (tcData["address"]["zone"] == "IMAC") {
+        x["assignedNextUser"] == "PI0006"
+    } else {
+        x["assignedNextUser"] == "PQ0001"
+    }
+    db.tcworkflow.save(x)
+})
+
+db.cmworkflow.find({ status: { "$in": ["Submitted By TC"] }, assignedNextUserRole: "SSC" }).forEach(x => {
+
+    tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
+    print(tcData["userName"])
+    x["assignedNextUserRole"] == "Inspection Agency"
+    if (tcData["address"]["zone"] == "IMAC") {
+        x["assignedNextUser"] == "PI0006"
+    } else {
+        x["assignedNextUser"] == "PQ0001"
+    }
+    db.cmworkflow.save(x)
+})
+
+
+
+data = db.qps.findOne({ "qpCode": "HSS/Q5102" }, { eqptDetails: 1 })
+eqptDetails = data["eqptDetails"]
+for (let k = 0; k < eqptDetails.length; k++) {
+    print(eqptDetails[k]["eqptName"])
+}
+
+db.trainingcentre.find({ userName: "TC143254" }).forEach(x => {
+
+    var finalEqpData = []
+    for (let i = 0; i < x["jobRoles"].length; i++) {
+        for (let j = 0; j < x["jobRoles"][i]["equipemnts"].length; j++) {
+            //print(x["jobRoles"][i]["equipemnts"][j]["eqptName"])
+            for (let k = 0; k < eqptDetails.length; k++) {
+                print(eqptDetails[k]["eqptName"])
+                if (eqptDetails[k]["eqptName"] == x["jobRoles"][i]["equipemnts"][j]["eqptName"]) {
+                    finalEqpData = finalEqpData.push(x["jobRoles"][i]["equipemnts"][j])
+                }
+            }
+        }
+    }
+})

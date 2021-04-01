@@ -1210,33 +1210,3 @@ db.trainingcentre.update({ userName: "TC131708" },
     })
 
 db.cmworkflow.updateMany({ assignedNextUser: "IMaCS_Inspector_0001" }, { "$set": { assignedNextUser: "PI0006" } })
-
-data = [
-    "TC115363",
-    "TC111197",
-    "TC110642",
-    "TC109180",
-    "TC108621",
-    "TC108084",
-    "TC107794",
-    "TC107542",
-    "TC106545",
-    "TC106393",
-    "TC104530",
-    "TC056511",
-    "TC100658",
-    "TC100186"
-]
-
-
-data.forEach(x => {
-
-    db.cmworkflow.find({ "tcId": x }).forEach(y => {
-
-        if (y["assignedNextUserRole"] == "SSC") {
-            y["assignedNextUserRole"] = "Inspection Agency"
-            y["assignedNextUser"] = "PQ0001"
-            db.cmworkflow.save(y)
-        }
-    })
-})
