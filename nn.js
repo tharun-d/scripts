@@ -183,11 +183,11 @@ db.tcworkflow.find({ status: { "$in": ["New Request", "reRequest"] }, assignedNe
 
     tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
     print(tcData["userName"])
-    x["assignedNextUserRole"] == "Inspection Agency"
+    x["assignedNextUserRole"] = "Inspection Agency"
     if (tcData["address"]["zone"] == "IMAC") {
-        x["assignedNextUser"] == "PI0006"
+        x["assignedNextUser"] = "PI0006"
     } else {
-        x["assignedNextUser"] == "PQ0001"
+        x["assignedNextUser"] = "PQ0001"
     }
     db.tcworkflow.save(x)
 })
@@ -196,7 +196,7 @@ db.tcworkflow.find({ status: { "$in": ["TCREJECTEDIASCHEDULE"] }, assignedNextUs
 
     tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
     print(tcData["userName"])
-    x["assignedNextUserRole"] == "Inspection Agency"
+    x["assignedNextUserRole"] = "Inspection Agency"
     if (tcData["address"]["zone"] == "IMAC") {
         x["assignedNextUser"] == "PI0006"
     } else {
@@ -209,35 +209,96 @@ db.cmworkflow.find({ status: { "$in": ["Submitted By TC"] }, assignedNextUserRol
 
     tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
     print(tcData["userName"])
-    x["assignedNextUserRole"] == "Inspection Agency"
+    x["assignedNextUserRole"] = "Inspection Agency"
+    if (tcData["address"]["zone"] == "IMAC") {
+        x["assignedNextUser"] = "PI0006"
+    } else {
+        x["assignedNextUser"] = "PQ0001"
+    }
+    db.cmworkflow.save(x)
+})
+db.tcworkflow.find({ "assignedNextUser": { "$in": ["Amit1", "SCPWD"] }, assignedNextUserRole: "Inspection Agency" }).forEach(x => {
+    tcData = db.trainingcentre.findOne({ userName: x["tcId"] })
     if (tcData["address"]["zone"] == "IMAC") {
         x["assignedNextUser"] == "PI0006"
     } else {
         x["assignedNextUser"] == "PQ0001"
     }
-    db.cmworkflow.save(x)
+    db.tcworkflow.save(x)
 })
 
 
 
-data = db.qps.findOne({ "qpCode": "HSS/Q5102" }, { eqptDetails: 1 })
+
+data = db.qps.findOne({ "qpCode": "HSS/Q5102", version: "2.0" }, { eqptDetails: 1 })
 eqptDetails = data["eqptDetails"]
-for (let k = 0; k < eqptDetails.length; k++) {
-    print(eqptDetails[k]["eqptName"])
-}
+print(eqptDetails.length)
 
+var finalEqpData = []
 db.trainingcentre.find({ userName: "TC143254" }).forEach(x => {
-
-    var finalEqpData = []
     for (let i = 0; i < x["jobRoles"].length; i++) {
         for (let j = 0; j < x["jobRoles"][i]["equipemnts"].length; j++) {
-            //print(x["jobRoles"][i]["equipemnts"][j]["eqptName"])
             for (let k = 0; k < eqptDetails.length; k++) {
-                print(eqptDetails[k]["eqptName"])
-                if (eqptDetails[k]["eqptName"] == x["jobRoles"][i]["equipemnts"][j]["eqptName"]) {
-                    finalEqpData = finalEqpData.push(x["jobRoles"][i]["equipemnts"][j])
+                if (eqptDetails[k]["status"] == "Active") {
+                    if (eqptDetails[k]["eqptName"] == x["jobRoles"][i]["equipemnts"][j]["eqptName"]) {
+                        finalEqpData.push(x["jobRoles"][i]["equipemnts"][j])
+                        continue
+                    }
                 }
+
             }
         }
     }
+    print(finalEqpData.length)
+})
+
+count = 0
+for (let k = 0; k < eqptDetails.length; k++) {
+    if (eqptDetails[k]["status"] == "Active") {
+        notFound = true
+        for (let i = 0; i < finalEqpData.length; i++) {
+            if (eqptDetails[k]["eqptName"] == finalEqpData[i]["eqptName"]) {
+                notFound = false
+            }
+        }
+        if (notFound) {
+            count = count + 1
+            var obj = {}
+            print(eqptDetails[k]["eqptName"])
+            obj["eqptName"] = eqptDetails[k]["eqptName"]
+            obj["minQtyReq"] = eqptDetails[k]["minEquipReq"]["for30Trainees"]
+            obj["mandatoryEqptAvailableToTC"] = "Yes"
+            obj["availabilityQuantity"] = eqptDetails[k]["minEquipReq"]["for30Trainees"]
+            obj["ciAavailabilityQuantity"] = eqptDetails[k]["minEquipReq"]["for30Trainees"]
+            obj["tccompleted"] = true
+            finalEqpData.push(finalEqpData, obj)
+        }
+    }
+}
+print(count)
+print("finalEqpData.length :  ", finalEqpData.length)
+printjson(finalEqpData)
+//db.trainingcentre.update({ userName: "TC143254" }, { "$set": { "jobRoles.$[].equipemnts": finalEqpData } })
+for (let k = 0; k < finalEqpData.length; k++) {
+    printjson(finalEqpData[k]["eqptName"])
+}
+
+
+order = [
+    '20180209153940657150678',
+    '2017112883358960140111',
+    '20180105124453410144821',
+    '20180612145323457176815',
+    '2018111912551737218265',
+    '2019011117229337231101',
+    '2018110813455070216540',
+    '2018052815118797171927',
+    '2018020117113967149395',
+    '201801251153017148152',
+    '20180203132134960149710',
+    '20181004122420187210502',
+    '2018012911032587148600']
+
+order.forEach(x => {
+    db.refundPayments.update({ orderId: x }, { "$set": { status: "Re-inspection as well as Re-Accreditation" } })
 })

@@ -1,27 +1,3 @@
-locationChangeData :[
-    {
-        "tcReviewComment": "",
-        "tcReviewDocument": "",
-        "tpStatus": "",
-        "tpReviewComment": "",
-        "tpReviewDocument": "",
-        "newAddressDetails": {
-            "addressLine": "",
-            "landmark": "",
-            "pincode": "",
-            "parliamentaryConstituency": {
-                "name": "",
-                "id": 10
-            }
-        },
-        "jobRoleDetails": [
-            {
-                "qp": "", // this is qpcode of job role
-                "jobRoleStatus": "", //either Continue or Delete
-                "schemeStatus": "", //Yes or No
-                "jobRoleStatusBySchemeApprover": "",
-                "schemeStatusBySchemeApprover": "",
-            }
-        ]
-    }
-]
+{
+    "access_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6InB1YmxpYzpiYzNmMWVjNC1mZjgyLTRhNzMtYTFmNy1lNWUzMTYxMWMyY2MiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOltdLCJjbGllbnRfaWQiOiJwYXJ0bmVyLmNwbS50ZXN0IiwiZXhwIjoxNjIwMTEwMDA5LCJleHQiOnt9LCJpYXQiOjE2MjAxMDY0MDksImlzcyI6Imh0dHBzOi8vYXBpLWRldi52aXJnb2t1LmRldi9vcGVuaWQvIiwianRpIjoiOGI2YTAxMzEtZTA5ZC00YTc5LTgwYzItNzM4ZDMzZjI2ODNlIiwibmJmIjoxNjIwMTA2NDA5LCJzY3AiOlsib3BlbmlkIiwib2ZmbGluZSJdLCJzdWIiOiJwYXJ0bmVyLmNwbS50ZXN0In0.ZJ4VM6HutVfKYbAfZA4R1WVWYlP1yRdZiCFIbdp75wKTcWO4F2q3gU7voMYucR-ru0ybhSxH6pIg_UkDGoN3aXiAnhFs_gsvRc-IAEwK0I1i8-U6CpS2jaC0Wj1Fyu58I5ltb0M7Hy7caXNsuL5-CzMhcLHmQrvtM7omSfzH8BNn4-S1ZaWGeo9L8G23J-6S_HoEUbppbCPe1AYho7FDwujYCqoI2-6k9T8fbCGWmdhU_HL2Pz6LnlGHN7RwuJCuEviKamTrIRqEoMkdE70glgbJjVruspedItwoGkjK4I2IalO7YTC1p5-_Y7UqPPqROOGHppdrEY8t9n1qsMGpR8R25sLSGKIbp3xx5KMAvS72EJGdtBi4DO3otDhc4Ln_q8BpAGHhB4x5-1hUwrz4LO_SK3FKe-DTtvnJnR0DqmH26tBfQTfyBDmNDeukhN6jn67jGACyKoAtISSPxvKwkzlmcjlMHXdde7EgWbHpGBPKvPmKtL4DQ_qi27UPTh9gqTDldKd_uF-SloF--easCGYsB1B0qGoSCK8v5KXmLlhazQHATNAt_67Zrh-fr6gd* Connection #0 to host api-dev.virgoku.dev left intact
+QMApvJrpYRvihoWahv3v5zPZvQY-tyx1yWRCpXgUjjjUM-9B3nu4CJA9LNdcbeWj6GotFIN0Wvkh-MIlNxTE7nESgx1UagnV2PgOf3VEHdI","expires_in":3599,"scope":"openid offline","token_type":"bearer"}

@@ -117,16 +117,10 @@ db.desktopassessor.insert(
 
 )
 
-db.users.update({ userName: "TC770054" },
+db.users.update({ userName: "TP010993" },
     {
         "$set": {
-            "password": "jj",
-            "hasChangedDefPass": true,
-        }, "$push": {
-            "passwordHistory": {
-                "password": "ss",
-                "changedOn": "",
-            },
+            "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
         }
     }
 )
@@ -134,69 +128,3 @@ db.users.update({ userName: "TC770054" },
 
 db.users.remove({ userName: "HARPREET.KAUR" })
 db.pmkkspoc.remove({ userName: "HARPREET.KAUR" })
-
-
-
-db.users.insert(
-    {
-        "email": "ankit.malani@nsdcindia.org",
-        "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "userName": "ankit.malani",
-        "role": "PMKK SPOC",
-        "phone": {
-            "mobile": NumberLong(9599122759)
-        },
-        "status": "init",
-        "created_at": new Date(),
-        "updated_at": new Date(),
-        "hasChangedDefPass": true,
-        "employeeId": "",
-        "aadhar": "",
-        "loginAttempts": 0,
-    }
-)
-
-db.pmkkspoc.insert(
-    {
-        "firstName": "Ankit Malani",
-        "userName": "ankit.malani",
-        "email": "ankit.malani@nsdcindia.org",
-        "role": "PMKK SPOC",
-        "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "hasChangedDefPass": "FALSE",
-        "phone": { "mobile": NumberLong("9599122759") },
-        "status": "Active"
-    }
-)
-
-db.users.insert(
-    {
-        "email": "sneha.suman@nsdcindia.org",
-        "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "userName": "sneha.suman",
-        "role": "PMKK SPOC",
-        "phone": {
-            "mobile": NumberLong(8744949649)
-        },
-        "status": "init",
-        "created_at": new Date(),
-        "updated_at": new Date(),
-        "hasChangedDefPass": true,
-        "employeeId": "",
-        "aadhar": "",
-        "loginAttempts": 0,
-    }
-)
-
-db.pmkkspoc.insert(
-    {
-        "firstName": "Sneha Suman",
-        "userName": "sneha.suman",
-        "email": "sneha.suman@nsdcindia.org",
-        "role": "PMKK SPOC",
-        "password": "$2a$10$Q.lPaaJzMSJdrnlVwsSRlefuBetQGdoH5F8kaAghufXveV3zqJ/cO",
-        "hasChangedDefPass": "FALSE",
-        "phone": { "mobile": NumberLong("8744949649") },
-        "status": "Active"
-    }
-)

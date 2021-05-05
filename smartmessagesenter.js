@@ -672,61 +672,9 @@ stages = {
 
 db.smartmessagecenter.update({ "tcid": "TC061896" }, { "$push": { "stages": stages } })
 
+db.residentialworkflow.remove({ tcId: "TC141326", _id: { "$nin": [ObjectId("605ef2afd01f71057e9f9b30")] } })
 
-
-db.tcworkflow.find({ status: "DAASSIGNED", assignedNextUserRole: "Inspection Agency" }).forEach(x => {
-    data = db.tcworkflow.find({ tcId: x["tcId"], assignedNextUserRole: "Desktop Assessor" }).sort({ "_id": -1 }).limit(1).toArray()
-    if (data[0]["status"] != "DAASSIGNED") {
-        print(x["tcId"])
-        x["status"] = data[0]["status"]
-        x["actionTakenOn"] = data[0]["actionTakenOn"]
-        db.tcworkflow.save(x)
-    }
-})
-
-
-
-
-a = db.cmStatusLog.distinct("tcUserName", { quarterNumber: 2 })
-a.forEach(x => {
-    count = db.cmStatusLog.find({ "tcUserName": x, quarterNumber: 2 }).count()
-    if (count == 2) {
-        co = 0
-        db.cmStatusLog.find({ "tcUserName": x, quarterNumber: 2 }).forEach(y => {
-            co = co + 1
-            if (co == 2) {
-                db.cmStatusLog.remove({ "_id": y["_id"] })
-            }
-        })
-    }
-})
-
-
-
-a = db.tccontinuousmonitoring.distinct("userName", { quarterNumber: 2 })
-a.forEach(x => {
-    count = db.tccontinuousmonitoring.find({ "userName": x, quarterNumber: 2 }).count()
-    if (count == 2) {
-        co = 0
-        db.tccontinuousmonitoring.find({ "userName": x, quarterNumber: 2 }).forEach(y => {
-            co = co + 1
-            if (co == 2) {
-                db.tccontinuousmonitoring.remove({ "_id": y["_id"] })
-            }
-
-        })
-    }
-})
-
-
-db.smartmessagecenter.find({ "stages": { "$exists": true } }).forEach(x => {
-    for (let index = 0; index < x["stages"].length; index++) {
-        str = x["stages"][index]["stage"]
-        if (str && str.startsWith("Since you have not responded")) {
-            x["stages"].splice(index, 1)
-            db.smartmessagecenter.update({ "tcid": x.tcid }, { $set: { stages: x["stages"] } })
-            break
-        }
-    }
-})
-
+db.smartmessagecenter.update({ "tcid": "TC141326" }, { "$pop": { "stages": 1 } })
+db.smartmessagecenter.update({ "tcid": "TC141326" }, { "$pop": { "stages": 1 } })
+db.smartmessagecenter.update({ "tcid": "TC141326" }, { "$pop": { "stages": 1 } })
+db.smartmessagecenter.update({ "tcid": "TC141326" }, { "$pop": { "stages": 1 } })

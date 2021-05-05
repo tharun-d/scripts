@@ -110,3 +110,20 @@ finalToRemove.forEach(data => {
         //print(data["qpCode"])
     }
 })
+
+
+db.trainerPreRequisite.find().forEach(x => {
+    data = db.qps.findOne({ qpCode: x["qpCode"], "isActive": true, "status.statusID": { "$in": ["6", "8"] } })
+    if (data && data["version"]) {
+        x["version"] = data["version"]
+    }
+    db.trainerPreRequisite.save(x)
+})
+
+db.labArea.find().forEach(x => {
+    data = db.qps.findOne({ qpCode: x["qpCode"], "isActive": true, "status.statusID": { "$in": ["6", "8"] } })
+    if (data && data["version"]) {
+        x["version"] = data["version"]
+    }
+    db.labArea.save(x)
+})

@@ -1,5 +1,5 @@
 var a = "TC"
-b = 10822081
+b = 10822100
 
 var newTC = []
 
@@ -7,36 +7,42 @@ for (let index = 0; index < 20; index++) {
     newTC.push(a + (b + index))
 
 }
-
-db.trainingcentre.find({ "userName": "TC1082208" }, { _id: 0 }).forEach(y => {
+print(newTC)
+db.trainingcentre.find({ "userName": "TC10822100" }, { _id: 0 }).forEach(y => {
     newTC.forEach(tc => {
         y["userName"] = tc
         db.trainingcentre.insertOne(y)
     })
 })
 
-db.users.find({ "userName": "TC1082208" }, { _id: 0 }).forEach(y => {
+db.users.find({ "userName": "TC10822100" }, { _id: 0 }).forEach(y => {
     newTC.forEach(tc => {
         y["userName"] = tc
         db.users.insertOne(y)
     })
 })
 
-db.tcworkflow.find({ "tcId": "TC1082208" }, { _id: 0 }).sort({ _id: -1 }).forEach(y => {
+db.locationchangeworkflow.find({ "tcId": "TC10822100" }, { _id: 0 }).sort({ _id: -1 }).forEach(y => {
+    newTC.forEach(tc => {
+        y["tcId"] = tc
+        db.locationchangeworkflow.insertOne(y)
+    })
+})
+
+db.tcworkflow.find({ "tcId": "TC10822100" }, { _id: 0 }).sort({ _id: -1 }).forEach(y => {
     newTC.forEach(tc => {
         y["tcId"] = tc
         db.tcworkflow.insertOne(y)
     })
 })
-
-db.smartmessagecenter.find({ "tcid": "TC1082208" }, { _id: 0 }).forEach(y => {
+db.smartmessagecenter.find({ "tcid": "TC10822100" }, { _id: 0 }).forEach(y => {
     newTC.forEach(tc => {
         y["tcid"] = tc
         db.smartmessagecenter.insertOne(y)
     })
 })
 
-db.payments.find({ userId: "TC1082208" }, { _id: 0 }).sort({ _id: -1 }).forEach(y => {
+db.payments.find({ userId: "TC10822100" }, { _id: 0 }).sort({ _id: -1 }).forEach(y => {
     newTC.forEach(tc => {
         y["userId"] = tc
         db.payments.insertOne(y)

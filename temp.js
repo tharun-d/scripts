@@ -1210,3 +1210,66 @@ db.trainingcentre.update({ userName: "TC131708" },
     })
 
 db.cmworkflow.updateMany({ assignedNextUser: "IMaCS_Inspector_0001" }, { "$set": { assignedNextUser: "PI0006" } })
+////
+
+
+data = db.qps.findOne({ "qpCode": "HSS/Q5102", version: "2.0" }, { eqptDetails: 1 })
+eqptDetails = data["eqptDetails"]
+print(eqptDetails.length)
+
+var finalEqpData = []
+db.trainingcentre.find({ userName: "TC143254" }).forEach(x => {
+    for (let i = 0; i < x["jobRoles"].length; i++) {
+        for (let j = 0; j < x["jobRoles"][i]["equipemnts"].length; j++) {
+            for (let k = 0; k < eqptDetails.length; k++) {
+                if (eqptDetails[k]["status"] == "Active") {
+                    if (eqptDetails[k]["eqptName"] == x["jobRoles"][i]["equipemnts"][j]["eqptName"]) {
+                        finalEqpData.push(x["jobRoles"][i]["equipemnts"][j])
+                        continue
+                    }
+                }
+
+            }
+        }
+    }
+    print(finalEqpData.length)
+})
+
+count = 0
+for (let k = 0; k < eqptDetails.length; k++) {
+    if (eqptDetails[k]["status"] == "Active") {
+        notFound = true
+        for (let i = 0; i < finalEqpData.length; i++) {
+            if (eqptDetails[k]["eqptName"] == finalEqpData[i]["eqptName"]) {
+                notFound = false
+            }
+        }
+        if (notFound) {
+            count = count + 1
+            var obj = {}
+            obj["eqptName"] = eqptDetails[k]["eqptName"]
+            obj["minQtyReq"] = eqptDetails[k]["minEquipReq"]["for30Trainees"]
+            obj["mandatoryEqptAvailableToTC"] = "Yes"
+            obj["availabilityQuantity"] = eqptDetails[k]["minEquipReq"]["for30Trainees"]
+            obj["ciAavailabilityQuantity"] = eqptDetails[k]["minEquipReq"]["for30Trainees"]
+            obj["tccompleted"] = true
+            finalEqpData.push(finalEqpData, obj)
+        }
+    }
+}
+print(count)
+print("finalEqpData.length :  ", finalEqpData.length)
+
+
+//db.trainingcentre.update({ userName: "TC143254" }, { "$set": { "jobRoles.$[].equipemnts": finalEqpData } })
+
+db.trainingcentre.find({userName: "TC143254" }).forEach(x=> {
+
+    for (let index = 0; index < x["jobRoles"].length; index++) {
+        for (let k = 0; k < finalEqpData.length; k++){
+            //printjson(finalEqpData[k])
+            x["jobRoles"][index]["equipemnts"].push(x["jobRoles"][index]["equipemnts"], finalEqpData[k])
+        }
+    }
+    db.trainingcentre.save(x)
+})
