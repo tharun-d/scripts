@@ -97,8 +97,7 @@ if (data) {
     db.cmworkflow.insert(data)
 }
 
-count = 0
-db.cmworkflow.find({ "assignedNextUserRole": "SSC" }).forEach(data => {
+db.cmworkflow.find({ "assignedNextUser": "SSC" }).forEach(data => {
 
     data["assignedNextUserRole"] = "Inspection Agency"
 
@@ -108,9 +107,9 @@ db.cmworkflow.find({ "assignedNextUserRole": "SSC" }).forEach(data => {
         data["assignedNextUser"] = "PQ0001"
     }
     db.cmworkflow.save(data)
-    count = count + 1
+   
 })
-print(count)
+
 
 
 db.trainingcentre.find({ "jobRoles": { "$exists": true }, continuousMonitoringPayment: "success" }).forEach(data => {

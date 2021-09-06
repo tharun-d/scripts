@@ -17,3 +17,12 @@ scp file.txt ec2-user@13.233.175.254:/home/ec2-user/
 
 mongoexport -d ekaushalnsdc -c loginData --type=csv --fields userName,sector,email,loginTime, -o loginData.csv
 
+mongodump --db covid_dev -c Region  -o /home/covid_dev/Region
+mongodump --db covid_dev -c Questionnaire  -o /home/covid_dev/Questionnaire
+
+scp -ri ~/.ssh/covid covid_dev@35.192.110.235:/home/covid_dev/Region .
+scp -ri ~/.ssh/covid covid_dev@35.192.110.235:/home/covid_dev/Questionnaire .
+
+mongorestore --db CovidTest Country
+mongorestore --db CovidTest Region
+mongorestore --db CovidTest Questionnaire

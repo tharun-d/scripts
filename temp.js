@@ -1263,13 +1263,162 @@ print("finalEqpData.length :  ", finalEqpData.length)
 
 //db.trainingcentre.update({ userName: "TC143254" }, { "$set": { "jobRoles.$[].equipemnts": finalEqpData } })
 
-db.trainingcentre.find({userName: "TC143254" }).forEach(x=> {
+db.trainingcentre.find({ userName: "TC143254" }).forEach(x => {
 
     for (let index = 0; index < x["jobRoles"].length; index++) {
-        for (let k = 0; k < finalEqpData.length; k++){
+        for (let k = 0; k < finalEqpData.length; k++) {
             //printjson(finalEqpData[k])
             x["jobRoles"][index]["equipemnts"].push(x["jobRoles"][index]["equipemnts"], finalEqpData[k])
         }
     }
     db.trainingcentre.save(x)
+})
+
+
+db.trainingcentre.update({ userName: "TC137268", "jobRoles.qp": "SSC/Q2212" }, {
+    "$set": {
+        "jobRoles.$.sscStatus": "Conditionally Accrediated",
+        "jobRoles.$.accrediatedOn": ISODate("2021-04-28T15:07:57.986Z"),
+    }
+})
+
+
+db.tcworkflow.update({ "_id": ObjectId("60897a4dec9b4c04c04ba729"), "tcId": "TC137268" },
+    { "$set": { status: "Conditionally Accrediated" } })
+
+var mc = db.smartmessagecenter.findOne({ tcid: "TC137268" })
+if (mc) {
+
+    var stage = {
+        "stage": "Job role SSC/Q2212 status has been changed from not accrediated  to conditionally accrediated based on SR10452",
+        "stageDate": new Date()
+    }
+    mc['stages'].push(stage)
+    printjson(mc['stages'][mc['stages'].length - 1])
+    db.smartmessagecenter.save(mc)
+}
+
+a = [
+    "Rejected",
+    "reRequest",
+    "init",
+    "appliedForUpdateCaaf",
+    "Approved",
+    "paymentAwaiting",
+    "QCRECOMMENDED",
+    "QCNOTRECOMMENDED",
+    "ongoing"
+]
+
+a.forEach(c => {
+    print(c)
+    count = db.trainingcentre.find({ "residentialFacilities.status": c }).count()
+    print(count)
+    count = db.trainingcentre.find({
+        "residentialFacilities.status": c,
+        "residentialFacilities.daReviews": { "$exists": false }
+    }).count()
+    print(count)
+})
+
+db.trainingcentre.find({
+    "residentialFacilities.status": { "$exists": true },
+    "daReviews": { "$exists": false },
+}, { userName: 1 }).pretty()
+
+//script 1
+//residentialFacilities.daReviews
+db.trainingcentre.find({
+    "residentialFacilities.status": { "$exists": true },
+    "daReviews": { "$exists": true }
+}).forEach(data => {
+    residentialDAReviews = []
+    data["daReviews"].forEach(x => {
+        if (x["residential"] && x["residential"]["residentialStatus"]) {
+            obj = {}
+            obj["status"] = x["residential"]["residentialStatus"]
+            obj["date"] = x["date"]
+            obj["review"] = x["residential"]["residentialReview"]
+            obj["dnrField"] = x["residential"]["residentialDnrField"]
+            obj["finalReview"] = x["residential"]["residentialFinalComment"]
+            residentialDAReviews.push(obj)
+        }
+    })
+    if (residentialDAReviews.length > 0) {
+        print("tc userName : ", data["userName"])
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.daReviews": residentialDAReviews } })
+    }
+})
+
+//script 2
+//residentialFacilities.qcReviews
+db.trainingcentre.find({
+    "residentialFacilities.status": { "$exists": true },
+    "qcReviews": { "$exists": true }
+}).forEach(data => {
+    residentialQCReviews = []
+    data["qcReviews"].forEach(x => {
+        if (x["residential"]) {
+            obj = {}
+            obj["date"] = x["date"]
+            obj["review"] = x["residential"]["residentialReview"]
+            obj["dnrField"] = x["residential"]["residentialDnrField"]
+            obj["residential"] = x["residential"]
+            //printjson(obj)
+            residentialQCReviews.push(obj)
+        }
+    })
+    if (residentialQCReviews.length > 0) {
+        print("tc userName : ", data["userName"])
+        print("length of residentialQCReviews : ", residentialQCReviews.length)
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.qcReviews": residentialQCReviews } })
+    }
+})
+
+
+//script 3
+//daDate, daStatus
+db.trainingcentre.find({
+    "residentialFacilities.status": { "$exists": true },
+    "residentialFacilities.daReviews": { "$exists": true }
+}).forEach(data => {
+    daDate = data["residentialFacilities"]["daReviews"][(data["residentialFacilities"]["daReviews"]).length - 1]["date"]
+    daStatus = data["residentialFacilities"]["daReviews"][(data["residentialFacilities"]["daReviews"]).length - 1]["status"]
+    print(daDate,daStatus)
+    if (data["residentialFacilities"]["men"] && data["residentialFacilities"]["men"]["availability"]) {
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.men.daDate": daDate, "residentialFacilities.men.daStatus": daStatus } })
+    }
+    if (data["residentialFacilities"]["women"] && data["residentialFacilities"]["women"]["availability"]) {
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.women.daDate": daDate, "residentialFacilities.women.daStatus": daStatus } })
+    }
+    if (data["residentialFacilities"]["transgender"] && data["residentialFacilities"]["transgender"]["availability"]) {
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.transgender.daDate": daDate, "residentialFacilities.transgender.daStatus": daStatus } })
+    }
+})
+
+//script 4
+//iaRecommendationDate
+db.trainingcentre.find({
+    "residentialFacilities.status": { "$exists": true },
+    "residentialFacilities.qcReviews": { "$exists": true }
+}).forEach(data => {
+    iaRecommendationDate = data["residentialFacilities"]["qcReviews"][(data["residentialFacilities"]["qcReviews"]).length - 1]["date"]
+    print(iaRecommendationDate)
+    if (data["residentialFacilities"]["men"] && data["residentialFacilities"]["men"]["availability"]) {
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.menStatus.iaRecommendationDate": iaRecommendationDate } })
+    }
+    if (data["residentialFacilities"]["women"] && data["residentialFacilities"]["women"]["availability"]) {
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.womenStatus.iaRecommendationDate": daDate } })
+    }
+    if (data["residentialFacilities"]["transgender"] && data["residentialFacilities"]["transgender"]["availability"]) {
+        db.trainingcentre.update({ userName: data["userName"] },
+            { "$set": { "residentialFacilities.transgenderStatus.iaRecommendationDate": iaRecommendationDate } })
+    }
 })

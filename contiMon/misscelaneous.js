@@ -433,3 +433,20 @@ db.trainingcentre.find({
         print(tcDetails["userName"])
     }
 })
+
+db.trainingcentre.find({ status: "Qualified", qcReviews: { "$exists": true } }).forEach(x => {
+    for (let index = 0; index < x["qcReviews"].length; index++) {
+        if (x["qcReviews"][index]["status"]) {
+            if (x["qcReviews"][index]["status"] == "QCRECOMMENDED") {
+                x["qcReviews"][index]["status"] = "Qualified"
+            }
+            if (x["qcReviews"][index]["status"] == "Deemed Not Ready") {
+                x["qcReviews"][index]["status"] = "Not Qualified"
+            }
+            if (x["qcReviews"][index]["status"] == "Deemed Ready") {
+                x["qcReviews"][index]["status"] = "Qualified"
+            }
+        }
+    }
+    db.trainingcentre.save(x)
+})
